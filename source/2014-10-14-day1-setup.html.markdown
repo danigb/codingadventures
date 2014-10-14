@@ -1,7 +1,74 @@
 ---
-title: Day1 Setup
+title: Setup
 date: 2014-10-14
 tags: day1 setup
 ---
 
-This is an example article. You probably want to delete it and write your own articles!
+We're going to use Overtone with Light Table. Let's install Clojure via
+[leiningen](https://github.com/technomancy/leiningen) using the terminal (MacOSX):
+
+~~~
+$ wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+$ mv lein /usr/local/bin
+$ chmod +x /usr/local/bin/lein
+$ lein --version
+~~~
+
+If everything is ok, you should see:
+
+~~~
+Leiningen 2.5.0 on Java 1.6.0_65 Java HotSpot(TM) 64-Bit Server VM
+~~~
+
+Then create a Overtone project and let Leiningen install the dependencies:
+
+~~~
+$ lein new livecoding
+$ cd livecoding
+# edit project.clj and add [overtone "0.9.1"] as dependency
+$ lein repl
+~~~
+
+After some downloads, you should see ´user=>´ from the clojure interactive
+environment. In case of doubt, my `project.clj` is this one:
+
+~~~  
+(defproject livecoding "0.1.0"
+  :description "Live coding setup with Overtone"
+  :url "http://overtur.es/2014/10/14/setup"
+  :license {:name "Eclipse Public License"
+            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :dependencies [
+                 [org.clojure/clojure "1.6.0"]
+                 [overtone "0.9.1"]])
+~~~
+
+Next, download the Light Table binary from the [home page](http://lighttable.com/)
+and move the LightTable.app to the Applications folder and the ´light´ script
+to a folder inside the executable PATH (tip: drop a file from the finder to
+the console to obtain the full path):
+
+~~~
+  $ mv /Users/Dani/Downloads/Light Table/light /usr/local/bin
+~~~
+
+We're test our setup opening a file with the light script:
+
+~~~
+# inside livecoding folder...
+$ touch src/livecoding/test_setup.clj
+$ light src/livecoding/test_setup.clj
+~~~
+
+And finally, our first clojure-overtone code! Type:
+
+~~~
+(ns overtone.examples.getting-started.video
+  (:use [overtone.live]))
+(def sin-synth (synth (out 0 (pan2 (sin-osc 440)))))
+(sin-synth)
+(stop)
+~~~
+
+We are going to try the live part of Light Table. Move to the first line
+and type ´Cmd+Space´
