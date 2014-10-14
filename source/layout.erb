@@ -1,0 +1,54 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <title>Overtone Adventures <%= ' - ' + current_article.title unless current_article.nil? %></title>
+    <%= feed_tag :atom, "#{blog.options.prefix.to_s}/feed.xml", title: "Atom Feed" %>
+    <meta name="description" content="overture.es: Overtone Adventures blog.">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Lora|Source+Code+Pro:300,600' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag 'all.css' %>
+    <script src="javascripts/vendor/modernizr-2.6.1.min.js"></script>
+</head>
+
+  <body>
+
+    <section class="content">
+      <header>
+        <h1 id="gistid"><a href="/">home</a></h1>
+        <h2 id="description">overtur.es: Overtone Adventures</h2>
+      </header>
+
+      <article>
+        <%= yield %>
+      </article>
+
+      <aside>
+        <h2>Recent Articles</h2>
+        <ol>
+          <% blog.articles[0...10].each do |article| %>
+            <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
+          <% end %>
+        </ol>
+
+        <h2>Tags</h2>
+        <ol>
+          <% blog.tags.each do |tag, articles| %>
+            <li><%= link_to "#{tag} (#{articles.size})", tag_path(tag) %></li>
+          <% end %>
+        </ol>
+
+        <h2>By Year</h2>
+        <ol>
+          <% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
+            <li><%= link_to "#{year} (#{articles.size})", blog_year_path(year) %></li>
+          <% end %>
+        </ol>
+      </aside>
+    </section>
+  </body>
+</html>
