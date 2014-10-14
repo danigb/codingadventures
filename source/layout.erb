@@ -22,8 +22,8 @@
 
     <section class="content">
       <header>
-        <h1 id="gistid"><a href="/">home</a></h1>
-        <h2 id="description">overtur.es: Overtone Adventures</h2>
+        <h1 id="gistid"><a href="/">overtur.es</a></h1>
+        <h2 id="description">Overtone Adventures</h2>
       </header>
 
       <article>
@@ -39,18 +39,12 @@
         </ol>
 
         <h2>Tags</h2>
-        <ol>
+        <ul class="tags">
           <% blog.tags.each do |tag, articles| %>
             <li><%= link_to "#{tag} (#{articles.size})", tag_path(tag) %></li>
           <% end %>
-        </ol>
+        </ul>
 
-        <h2>By Year</h2>
-        <ol>
-          <% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
-            <li><%= link_to "#{year} (#{articles.size})", blog_year_path(year) %></li>
-          <% end %>
-        </ol>
       </aside>
     </section>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>

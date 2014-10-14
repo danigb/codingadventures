@@ -1,10 +1,16 @@
-article > h1:first-child {
+
+
+article .summary > h1:first-child {
   display: none; }
 article h1, article h2, article h3, article h4, article h5 {
   font-weight: 300;
-  margin-top: 2em;
-  color: black; }
-article h1, article h2 {
+  margin-top: 1.5em;
+  color: #222; }
+article h1 {
+  font-size: 5em;
+  text-transform: uppercase;
+  line-height: 1em; }
+article h2 {
   font-size: 1.5em; }
 article h3 {
   font-weight: 400;

@@ -1,8 +1,10 @@
 ---
-title: Setup
+title: Overtone and Light Table setup
 date: 2014-10-14
-tags: day1 setup
+tags: overtone, light table, setup, clojure, leiningen
 ---
+
+# Setup: Overtone and Light Table
 
 We're going to use Overtone with Light Table. Let's install Clojure via
 [leiningen](https://github.com/technomancy/leiningen) using the terminal (MacOSX):
@@ -62,8 +64,8 @@ $ light src/livecoding/test_setup.clj
 
 And finally, our first clojure-overtone code! Type:
 
-~~~
-(ns overtone.examples.getting-started.video
+~~~ clojure
+(ns overtur.examples.test-setup
   (:use [overtone.live]))
 (def sin-synth (synth (out 0 (pan2 (sin-osc 440)))))
 (sin-synth)
@@ -71,4 +73,20 @@ And finally, our first clojure-overtone code! Type:
 ~~~
 
 We are going to try the live part of Light Table. Move to the first line
-and type ´Cmd+Space´
+and type `Cmd+Space`, a `nil` should appear next to it. Repeat the same key
+combination over the thirth and fourth line. If you can hear a sound, you
+just end this setup.
+
+Last but not least, in next posts we are going to use a sampled piano.
+The initial download is quite long, so maybe is a good idea to do it now:
+
+~~~
+(ns overtone.examples.getting-started.video
+  (:use [overtone.live]
+  [overtone.inst.sampled-piano]))
+
+(def piano sampled-piano)
+(piano)
+~~~
+
+Run the first line (with `Cmd+Space`) and wait.
