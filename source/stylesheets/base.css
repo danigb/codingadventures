@@ -18,6 +18,17 @@ body {
   color: #444;
   font-weight: 300; }
 
+a {
+  color: #4da7ca;
+  -webkit-transition: all 0.15s ease-out 0;
+  -moz-transition: all 0.15s ease-out 0;
+  transition: all 0.15s ease-out 0; }
+  a:hover, a:visited:hover {
+    color: #296e88; }
+  a:visited {
+    color: #88c4dc; }
+
+
 .content {
   padding: 0.809em;
   max-width: 30em;

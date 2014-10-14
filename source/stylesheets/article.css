@@ -1,0 +1,35 @@
+article > h1:first-child {
+  display: none; }
+article h1, article h2, article h3, article h4, article h5 {
+  font-weight: 300;
+  margin-top: 2em;
+  color: black; }
+article h1, article h2 {
+  font-size: 1.5em; }
+article h3 {
+  font-weight: 400;
+  font-size: 0.925em;
+  margin-top: 3em;
+  text-transform: uppercase; }
+article h4, article h5, article h6 {
+  font-weight: 400;
+  font-size: 0.925em;
+  margin-top: 3em;
+  font-style: italic; }
+article ul, article ol {
+  list-style-position: outside;
+  padding: 0; }
+article blockquote {
+  margin: 0;
+  padding-left: 1em;
+  border-left: 1px solid #ddd; }
+article ul, article ol, article p, article blockquote {
+  line-height: 1.5em; }
+article img, article object, article video, article audio, article figure, article iframe {
+  max-width: 100%; }
+article pre, article code, article samp {
+  font-family: 'Source Code Pro', monospace; }
+article .highlight {
+  padding: 0.1em 0.5em;
+  background: #1d1f21;
+  font-size: 0.88em; }
