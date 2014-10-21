@@ -30,22 +30,7 @@
         <%= yield %>
       </article>
 
-      <aside>
-        <h2>Recent Articles</h2>
-        <ol>
-          <% blog.articles[0...10].each do |article| %>
-            <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
-          <% end %>
-        </ol>
 
-        <h2>Tags</h2>
-        <ul class="tags">
-          <% blog.tags.each do |tag, articles| %>
-            <li><%= link_to "#{tag} (#{articles.size})", tag_path(tag) %></li>
-          <% end %>
-        </ul>
-
-      </aside>
     </section>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>

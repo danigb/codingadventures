@@ -75,6 +75,8 @@ environment. In case of doubt, my `project.clj` is this one:
                  [overtone "0.9.1"]])
 ~~~
 
+## Install Light Table
+
 Next, download the Light Table binary from the [home page](http://lighttable.com/)
 and move the LightTable.app to the Applications folder and the ´light´ script
 to a folder inside the executable PATH (tip: drop a file from the finder to
@@ -92,6 +94,9 @@ $ touch src/livecoding/test_setup.clj
 $ light src/livecoding/test_setup.clj
 ~~~
 
+
+## Out first sound!
+
 And finally, our first clojure-overtone code! Type:
 
 ~~~ clojure
@@ -107,6 +112,8 @@ and type `Cmd+Space`, a `nil` should appear next to it. Repeat the same key
 combination over the thirth and fourth line. If you can hear a sound, you
 just end this setup.
 
+## Install the piano samples
+
 Last but not least, in next posts we are going to use a sampled piano.
 The initial download is quite long, so maybe is a good idea to do it now:
 
@@ -121,3 +128,10 @@ The initial download is quite long, so maybe is a good idea to do it now:
 Run the first line (with `Cmd+Space`) and listen. Not very exciting but the
 foundation of our explorarion. By the way, this is the simplest way to call a
 funcion in clujure: `(method-name arg1 arg2 arg3 ...)`
+
+
+### What I learned
+
+- `Cmd+Space` to execute the current line in Light Table
+- `(method-name arg1 arg2 arg3 ...)` to call method-name
+- Install Overtone its easy!
