@@ -6,6 +6,18 @@ tags: overtone, light table, setup, clojure, leiningen
 
 # Setup: Overtone and Light Table
 
+Overtone is an awesome music library built over SuperColider with Clojure. We
+want to use the live features and sice I don't know emacs, I will give Light
+Table a try.
+
+## Install jdk
+
+In the latest OSX version (Yosemite) Java is not included. As the time I write
+this, the first compatible version is
+[Java 8 update 25](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
+## Install Clojure
+
 We're going to use Overtone with Light Table. Let's install Clojure via
 [leiningen](https://github.com/technomancy/leiningen) using the terminal (MacOSX):
 
@@ -21,6 +33,8 @@ If everything is ok, you should see:
 ~~~
 Leiningen 2.5.0 on Java 1.6.0_65 Java HotSpot(TM) 64-Bit Server VM
 ~~~
+
+## Install Overtone
 
 Then create a Overtone project and let Leiningen install the dependencies:
 
@@ -85,8 +99,9 @@ The initial download is quite long, so maybe is a good idea to do it now:
   (:use [overtone.live]
   [overtone.inst.sampled-piano]))
 
-(def piano sampled-piano)
-(piano)
+(sampled-piano)
 ~~~
 
-Run the first line (with `Cmd+Space`) and wait.
+Run the first line (with `Cmd+Space`) and listen. Not very exciting but the
+foundation of our explorarion. By the way, this is the simplest way to call a
+funcion in clujure: `(method-name arg1 arg2 arg3 ...)`

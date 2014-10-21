@@ -41,3 +41,6 @@ article pre  {
   font-size: 0.88em; }
 article pre code.hljs {
   overflow: hidden; }
+article div.update {
+  border: 1px solid #888;
+  padding: 5px 2em; }
