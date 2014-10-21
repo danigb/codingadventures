@@ -6,15 +6,31 @@ tags: overtone, light table, setup, clojure, leiningen
 
 # Setup: Overtone and Light Table
 
-Overtone is an awesome music library built over SuperColider with Clojure. We
-want to use the live features and sice I don't know emacs, I will give Light
-Table a try.
+This is the first post of a series about learn Overtone. For me that means
+learn Clojure. So here I will show my process: the progress and the failures
+and I hope its useful for someone.
 
-## Install jdk
+[Overtone](https://github.com/overtone/overtone) is an awesome music
+library built over [SuperCollider](http://supercollider.sourceforge.net/) with
+[Clojure](http://clojure.org/). I want to use the live features and
+ since I don't know emacs (a Clojure standard), I will give Light Table a try.
 
-In the latest OSX version (Yosemite) Java is not included. As the time I write
-this, the first compatible version is
+## Install JDK
+
+Clojure runs over the Java Virtual Machine, so it is a requirement. Until OSX 10.10
+(Yosemite) Java was bundled by default, so you don't have to worry. As the time
+I write this, the first compatible version is
 [Java 8 update 25](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
+Afeter download it, and install the package, if you write in a terminal
+`java -version` you should see:
+
+~~~
+java version "1.8.0_25"
+Java(TM) SE Runtime Environment (build 1.8.0_25-b17)
+Java HotSpot(TM) 64-Bit Server VM (build 25.25-b02, mixed mode)
+~~~
+
 
 ## Install Clojure
 
