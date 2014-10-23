@@ -1,13 +1,13 @@
 ---
-title: Playing Scales
+title: "Day 2: Playing Scales"
 date: 2014-10-15
 tags: clojure, light table, overtone, music theory, scales
 ---
 
-# Play Scales
+# Day 2: Playing Scales
 
-In this post we are going to learn how to play a sequence of notes with
-Overtone. Not so easy, If you are new to Overtone and Clojure.
+Today I want to learn how to play a sequence of notes with
+Overtone. Not so easy if, like me, you are new to Overtone and Clojure.
 
 To learn the basics of  Clojure you can follow the excellent
 [swannodette Clojure-LightTable tutorial](https://github.com/swannodette/lt-cljs-tutorial)
@@ -18,7 +18,7 @@ I assume some music theory background, but I think you can go without it. Let's 
 
 In the [first post]() we created a simple Clojure project called `livecoding`.
 We are going to add a new file into the `src/livecoding` folder called
-`play-scales.clj` and add the following declaration:
+`play-scales.clj` with the following declaration:
 
 ~~~ clojure
 (ns overtur.es.play-scales
@@ -26,8 +26,8 @@ We are going to add a new file into the `src/livecoding` folder called
         overtone.inst.sampled-piano))
 ~~~
 
-Basically we define a namespace (`ns`) and **imports** two modules: `overtone.live`
-and `overtone.inst.sampled-piano`.
+Basically we define a namespace (`ns`) in which we are going to use two modules:
+`overtone.live` and `overtone.inst.sampled-piano`.
 
 Theres a Light Table short-cut to evaluate entire file: `Cmd-Shift-Enter`.
 
@@ -45,6 +45,7 @@ What 60 means?:
 ~~~
 
 Ok, lets create a new method:
+
 ~~~ clojure
 (defn piano [note] (sampled-piano note 0.2))
 (piano 58)
@@ -147,8 +148,8 @@ Let's try with it:
 (play-recur (now) (scale :A3 :locrian))   => nil
 ~~~
 
-Yeah! Note: we use when because evaluate multiple expressions in order (first
-we play the first note AND then we recur)
+Yeah! Note: we use `when` because evaluate multiple expressions in order (first
+we play the first note and then we recur).
 
 Lets try with `loop`:
 
@@ -206,7 +207,7 @@ And some other stuff:
   (play-recur (+ t 750) (map #(+ 24 %) seq1)))
 ~~~
 
-## What I learned
+### What I learned
 
 - Create scales and working with sequences (`first`, `rest`)
 - Use `at` to schedule
@@ -214,3 +215,12 @@ And some other stuff:
 - Use recursion with `recur` and `loop`/`recur`
 - Use `let` to bind parameters
 - Nice Clojure methods: `shuffle`, `cycle`, `take`, `range`
+
+## Extra: Browse documentation with Light Table
+
+Light Table has a built-in documentation browser. Just press `Ctrl+Shift+D` and
+search for a method name. This is an excerpt from the documentation of the
+ `at` method:
+
+> Schedule server communication - specify that communication messages
+>   execute on the server at a specific time in the future
