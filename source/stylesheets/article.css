@@ -5,6 +5,7 @@ article .summary > h1:first-child {
 article h1, article h2, article h3, article h4, article h5 {
   font-weight: 300;
   margin-top: 1.5em;
+  margin-bottom: 0em;
   color: #222; }
 article h1 {
   font-size: 5em;
@@ -12,6 +13,9 @@ article h1 {
   line-height: 1em; }
 article h2 {
   font-size: 1.5em; }
+article h2 span.date {
+  color: #444;
+  font-size: 0.6em;}
 article h3 {
   font-weight: 400;
   font-size: 0.925em;
@@ -36,6 +40,10 @@ article img, article object, article video, article audio, article figure, artic
 article pre, article code, article samp {
   font-family: 'Source Code Pro', monospace;
   font-size: 0.88; }
+article h2 + p {
+    margin-top: 0.5em;
+}
+
 p code { font-size: 0.88em; padding-right: 0.2em; }
 article pre  {
   padding: 0 0.3em;

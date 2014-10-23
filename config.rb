@@ -26,6 +26,10 @@ activate :blog do |blog|
   blog.tag_template = "tag.html"
   blog.calendar_template = "calendar.html"
 
+  blog.summary_generator = Proc.new do |article, content|
+    Nokogiri::HTML(content).at('p')
+  end
+
   # Enable pagination
   # blog.paginate = true
   # blog.per_page = 10
