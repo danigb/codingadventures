@@ -10,12 +10,11 @@ article h1 {
   text-transform: uppercase;
   line-height: 1em; }
 article h2 {
+  margin-top: 2.5em;
   font-size: 1.5em; }
 article h2 + p {
     margin-top: 0.5em; }
-article h2 span.date {
-  color: #444;
-  font-size: 0.6em;}
+
 article h3 {
   font-weight: 400;
   font-size: 0.925em;
@@ -31,8 +30,10 @@ article ul, article ol {
   padding: 0; }
 article blockquote {
   display: block;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'Source Code Pro', monospace;
   font-weight: 300;
+  color: #333;
+  font-size: 0.88em;
   margin: 2em 0;
   padding-left: 1em;
   border-left: 1px solid #ddd; }
@@ -53,5 +54,3 @@ article pre code.hljs {}
 article div.update {
   border: 1px solid #888;
   padding: 5px 2em; }
-
-article a.read-more { font-size: 0.7em; margin-top: -0.5em; display: block;
