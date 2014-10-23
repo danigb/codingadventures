@@ -1,7 +1,5 @@
 
 
-article .summary > h1:first-child {
-  display: none; }
 article h1, article h2, article h3, article h4, article h5 {
   font-weight: 300;
   margin-top: 1.5em;
@@ -13,6 +11,8 @@ article h1 {
   line-height: 1em; }
 article h2 {
   font-size: 1.5em; }
+article h2 + p {
+    margin-top: 0.5em; }
 article h2 span.date {
   color: #444;
   font-size: 0.6em;}
@@ -27,10 +27,13 @@ article h4, article h5, article h6 {
   margin-top: 3em;
   font-style: italic; }
 article ul, article ol {
-  list-style-position: outside;
+  list-style-position: inside;
   padding: 0; }
 article blockquote {
-  margin: 0;
+  display: block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  margin: 2em 0;
   padding-left: 1em;
   border-left: 1px solid #ddd; }
 article ul, article ol, article p, article blockquote {
@@ -40,9 +43,7 @@ article img, article object, article video, article audio, article figure, artic
 article pre, article code, article samp {
   font-family: 'Source Code Pro', monospace;
   font-size: 0.88; }
-article h2 + p {
-    margin-top: 0.5em;
-}
+
 
 p code { font-size: 0.88em; padding-right: 0.2em; }
 article pre  {
@@ -52,3 +53,5 @@ article pre code.hljs {}
 article div.update {
   border: 1px solid #888;
   padding: 5px 2em; }
+
+article a.read-more { font-size: 0.7em; margin-top: -0.5em; display: block;

@@ -26,6 +26,9 @@ a {
   -webkit-transition: all 0.15s ease-out 0;
   -moz-transition: all 0.15s ease-out 0;
   transition: all 0.15s ease-out 0; }
+a:hover {
+  color: #193B8A;
+}
 
 h2 a { color: #222; }
 
