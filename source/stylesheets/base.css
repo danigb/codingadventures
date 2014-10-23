@@ -17,18 +17,17 @@ body {
   /*font-family: 'Lora', Georgia, serif;*/
   font-family: 'Lora', Georgia, serif;
   font-size: 1.1em;
-  color: #444;
+  color: #222;
   font-weight: 300; }
 
 a {
-  color: #4da7ca;
+  color: #2455C3;
+  text-decoration: none;
   -webkit-transition: all 0.15s ease-out 0;
   -moz-transition: all 0.15s ease-out 0;
   transition: all 0.15s ease-out 0; }
-  a:hover, a:visited:hover {
-    color: #296e88; }
-  a:visited {
-    color: #88c4dc; }
+
+h2 a { color: #222; }
 
 
 .content {

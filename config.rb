@@ -4,6 +4,9 @@
 
 # Time.zone = "UTC"
 
+activate :syntax,
+  line_numbers: false
+
 activate :blog do |blog|
   # This will add a prefix to all links, template references and source paths
   # blog.prefix = "blog"
