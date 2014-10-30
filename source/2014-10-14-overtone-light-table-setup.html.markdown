@@ -1,10 +1,10 @@
 ---
-title: "Day 1: Overtone and Light Table setup"
+title: "Overtone Day 1: Setup live environment with Light Table"
 date: 2014-10-14
 tags: overtone, light table, setup, clojure, leiningen
 ---
 
-# Day 1: Overtone and Light Table setup
+# Overtone Day 1: Setup live environment with Light Table
 
 This is the first post of a series about learn Overtone. For me that means
 learn Clojure. So here I will show my process: the progress and the failures

@@ -1,12 +1,12 @@
 ---
-title: "Day 3: Generating sounds"
+title: "Overtone Day 3: Generating sounds"
 date: 2014-10-21
 tags: clojure, overtone, sound, synth
 ---
 
 
 
-# Day 3: Generating sounds
+# Overtone Day 3: Generating sounds
 
 Today I will try to learn how can I use Overtone to synthesize new sounds. Maybe
 its a goot time to take a look (and print!) the [Overtone cheatsheet](https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf)

@@ -1,10 +1,10 @@
 ---
-title: "Day 2: Playing Scales"
+title: "Overtone Day 2: Playing Scales"
 date: 2014-10-15
 tags: clojure, light table, overtone, music theory, scales
 ---
 
-# Day 2: Playing Scales
+# Overtone Day 2: Playing Scales
 
 Today I want to learn how to play a sequence of notes with
 Overtone. Not so easy if, like me, you are new to Overtone and Clojure.
