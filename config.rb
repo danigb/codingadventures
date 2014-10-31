@@ -2,7 +2,7 @@
 # Time.zone = "UTC"
 
 activate :syntax,
-  line_numbers: false
+  line_numbers: true
 
 activate :blog do |blog|
   blog.tag_template = "tag.html"

@@ -15,12 +15,12 @@ server with express and browserify.
 
 In the second part ([Part 2 here](/)) we'll use react.js to create the user
 interface. In the third ([Part 3 here]()) we'll learn how to use the WebAudio
-API to load and play sounds samples. And in the fourth ([Part 4 here]()) we'll
-see how to schedule events and give live to the machine. Let's go!
+API to load and play sounds. And in the fourth ([Part 4 here]()) we'll
+see how to schedule events and beat the machine. Let's go!
 
 ## Create the project and add dependencies
 
-I assume you have node and npm installed. If it is not the case,
+I assume you have `node` and `npm` installed. If it is not the case,
 take a look here: [https://github.com/npm/npm](https://github.com/npm/npm)
 
 So, let's create the directory structure and (though this is optional)
@@ -34,7 +34,7 @@ git init .
 wget https://raw2.github.com/github/gitignore/master/Node.gitignore -O .gitignore
 ~~~
 
-We use `npm` to `init` the project and `install` the dependencies:
+We use `npm` to `init` the project and `install` the required libraries:
 
 ~~~ bash
 npm init
@@ -127,8 +127,8 @@ Beatbox =
 module.exports = Beatbox
 ~~~
 
-A common mistake (for me at least) is forget to write the `module.exports`
+A common mistake (at least for me) is to forget the `module.exports`
 declaration. First thing to check when you have strange exceptions at runtime.
 
-If you reload the server and see 'Hello from beatbox!' you are ready to move on:
-[Beatbox 2: Create the user interface with react.js]()
+If you reload the browser and see 'Hello from beatbox!' then you are ready to
+[Beatbox 2: Create the user interface with react.js](). Move on!

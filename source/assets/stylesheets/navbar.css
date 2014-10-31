@@ -1,0 +1,22 @@
+#navbar {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  padding: 1.5em;
+  background-color: rgba(255, 255, 255, 1);
+  border-bottom: 1px solid #efefef;
+}
+
+#navbar header {
+  max-width: 40em;
+  margin: auto;
+
+}
+header h1, header h2 {
+  display: inline;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+header #root a { color: #333; font-weight: 300; }
+header #description { display: none; }

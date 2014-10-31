@@ -1,8 +1,0 @@
-header h1, header h2 {
-  display: inline;
-  font-size: 1em;
-  font-weight: normal;
-}
-
-header #root a { color: #333; font-weight: 300; }
-header #description { display: none; }
