@@ -1,9 +1,8 @@
 ---
-title: 'Beatbox: build a rhythm machine with WebAudio API and React.js'
-# date: TBD When publishing
-tags:
+:title: 'Beatbox: build a rhythm machine with WebAudio API and React.js'
+:tags: tutorial, web audio api, react, coffeescript
+:date: 2014-10-31
 ---
-
 # Beatbox: build a rhythm machine with WebAudio API and React.js
 
 Encouraged by my first steps with Clojure and how popular React.js is within its
