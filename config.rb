@@ -13,6 +13,8 @@ activate :blog do |blog|
   end
 end
 
+activate :drafts
+
 page "/feed.xml", layout: false
 
 set :css_dir, 'assets/stylesheets'

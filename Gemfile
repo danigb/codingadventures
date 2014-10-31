@@ -4,6 +4,7 @@ source 'http://rubygems.org'
 
 gem "middleman", "~> 3.3.5"
 gem "middleman-blog", "~> 3.5.3"
+gem "middleman-blog-drafts"
 gem "middleman-syntax"
 gem "middleman-deploy"
 
