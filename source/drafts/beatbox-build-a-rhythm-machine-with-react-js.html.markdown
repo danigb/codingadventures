@@ -6,27 +6,26 @@ tags:
 
 # Beatbox: build a rhythm machine with WebAudio API and React.js
 
-Animado por mis primeros pasos con Clojure y lo popular que es React.js en esa
-comunidad (vía [om](https://github.com/swannodette/om)) me lanzo a mi primer
-experimento: crear una caja de ritmos utilizando WebAudio API. El código
-lo escribiremos en [Coffeescript](http://coffeescript.org).
+Encouraged by my first steps with Clojure and how popular React.js is within its
+community (via [om](https://github.com/swannodette/om)), I launched my first
+experiment: build a simple drum machine using WebAudio API and
+[CoffeeScript](http://coffeescript.org).
 
-En esta primera parte montaremos una pequeña infraestructura para desarrollar
-el proyecto, utilizando node, express, browserify y coffeescript.
+In this first part we'll setup the project using node, and build a simple
+server with express and browserify.
 
-En la segunda parte ([2ª parte aquí](/)) utilizaremos react.js para crear el interface
-de usuario. En la tercera ([3ª parte aquí]()) aprenderemos a utilizar la WebAudio API
-para cargar y lanzar sonidos. Y en la cuarta ([4ª parte aquí]()) veremos cómo
-lanzar esos sonidos a tiempo. Vámos!
+In the second part ([Part 2 here](/)) we'll use react.js to create the user
+interface. In the third ([Part 3 here]()) we'll learn how to use the WebAudio
+API to load and play sounds samples. And in the fourth ([Part 4 here]()) we'll
+see how to schedule events and give live to the machine. Let's go!
 
-##Crear el proyecto y añadir dependencias
+## Create the project and add dependencies
 
-Voy a dar por supuesto que tenemos node instalado y funcionando. Si no es así
-podéis mirar aquí:
+I assume you have node and npm installed. If it is not the case,
+take a look here: [https://github.com/npm/npm](https://github.com/npm/npm)
 
-Vamos a crear la estructura de directorio y (aunque esto es opcional)
-inicializaremos nuestro un repositorio git local utilizando un `.gitignore`
-predefinido:
+So, let's create the directory structure and (though this is optional)
+initialize our git repository locally using a predefined `.gitignore`:
 
 ~~~bash
 mkdir beatbox
@@ -36,8 +35,7 @@ git init .
 wget https://raw2.github.com/github/gitignore/master/Node.gitignore -O .gitignore
 ~~~
 
-Node viene con un estupendo gestor de paquetes: `npm`. Lo vamos a usar para
-añadir las dependencias:
+We use `npm` to `init` the project and `install` the dependencies:
 
 ~~~ bash
 npm init
@@ -45,21 +43,21 @@ npm install --save react@0.12.0-rc1
 npm install --save express ejs
 npm install --save-dev browserify watchify nodemon
 npm install --save-dev panel-static
-
 ~~~
 
-Después de responder a las preguntas de `npm init` vamos a instalar unas
-cuantas librerías. En primer lugar, la última versión de react disponible
-en estos momentos. Express y ejs nos permitirán montar un pequeño servidor
-web para el desarrollo.
-Browserify es una librería que nos permite programar utilizar la sintáxis de
-CommonJS para definir módulos y sus dependencias. De esa manera crea un solo
-archivo .js para nuestra aplicación.
-Y panel-static permite que podamos usar coffeescript con Browserify.
+`npm init` will ask us some questions.
+Take note of the `--save` and `--save-dev` modifiers when installing the
+libraries.
 
-##Servidor de desarrollo
+Browserify allows us to split the application in modules and declare their
+dependencies using the popular CommonJS syntax: `require` and `module.exports`
 
-En `./server.js` vamos a definir nuestro pequeño servidor de desarollo:
+Unfortunately it doesn't work with Coffescript, so `panel-static` to the rescue.
+
+## Development server
+
+In `./server.js` we define our small development server (express and
+  panel-static do all the hard work):
 
 ~~~javascript
 var fs = require('fs');
@@ -74,7 +72,7 @@ app.listen(4567);
 console.log('Server started: http://localhost:4567/');
 ~~~
 
-Añadimos una página html `/public/index.html`:
+Add a `/public/index.html` file:
 
 ~~~html
 <!DOCTYPE html>
@@ -89,7 +87,7 @@ Añadimos una página html `/public/index.html`:
     <article>
       <h1>Beatbox</h1>
       <div id="beatbox">
-        cargando...
+        loading...
       </div>
     </article>
   </body>
@@ -97,44 +95,41 @@ Añadimos una página html `/public/index.html`:
 </html>
 ~~~
 
-Y encendemos el servidor:
+And start the server:
 
 ~~~bash
 npm start
 ~~~
 
-Si todo va bien, deberíamos ver 'cargando...' cuando nos conectamos a
+If everything it's all right, we should see 'loading...' at
 [http://localhost:4567](http://localhost:4567)
 
-##Comprobar que browserify funciona
+##Test browserify and coffeescript
 
-Vamos a hacer una pequeña prueba de que nuestro sistema funciona. Añadimos
-un primer módulo `./public/js/app.js.coffee` y que sirve como punto de entrada
-(es el que hemos definido en el html):
+We'll add a couple of modules to test browserify. The first one
+`./public/js/app.js.coffee` is the app entry point (because is the one we
+referenced at `index.html`)
 
 ~~~coffeescript
-Beatbox = require './submodule.js'
+Beatbox = require './beatbox.js'
 
 window.onload = ->
   document.getElementById('beatbox').innerHTML = Beatbox.hello()
 ~~~
 
-Como véis declara que depende de un submódulo que vamos a escribir en
-`./public/js/submodule.js.coffee` (cuidado con las extensiones: cuando
-usamos `require` damos por supuesto que el coffeescript ha sido traducido
-a javascript):
-
-And a submodule `public/js/submodule.js.coffee`:
+We use the `hello` method from the Beatbox module. Take care with file
+extensions: `require` works after coffeescript compilation. The Beatbox
+module lives here `public/js/beatbox.js.coffee`:
 
 ~~~coffeescript
 Beatbox =
-  hello: -> 'Hello from submodule!'
+  hello: -> 'Hello from beatbox!'
 
 module.exports = Beatbox
 ~~~
 
-Coffeescript es sensible a la indentación, así que ten cuidado
-(si utilizas vim, usa :set paste)
+A common mistake (for me at least) is forget to write the `module.exports`
+declaration. First thing to check when you have strange exceptions at runtime.
 
-Si todo ha ido bien y al recargar la página ves "Hola desde el submódulo" es
-que estás listo/a para pasar a la [segunda parte]()
+If you reload the server and see 'Hello from beatbox!' you are ready to move on:
+[Beatbox 2: Create the user interface with react.js]()
