@@ -67,8 +67,8 @@ var panelStatic = require('panel-static')
 app = express();
 app.use(panelStatic(path.join(__dirname, 'public')));
 
-app.listen(4567);
-console.log('Server started: http://localhost:4567/');
+app.listen(3000);
+console.log('Server started: http://localhost:3000/');
 ~~~
 
 Add a `/public/index.html` file:
@@ -101,7 +101,7 @@ npm start
 ~~~
 
 If everything it's all right, we should see 'loading...' at
-[http://localhost:4567](http://localhost:4567)
+[http://localhost:3000](http://localhost:3000)
 
 ##Test browserify and coffeescript
 
