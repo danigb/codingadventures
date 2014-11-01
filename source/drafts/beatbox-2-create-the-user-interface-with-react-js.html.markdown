@@ -35,7 +35,7 @@ public/beatbox
 
 Every component has two attributes (`@props` and `@state`) that contains application state. One of the first difficulties for me at the beginning was understand when I should use one or the other.
 
-After some hacking, experimentation and, ahem, **documentation reading** the concept is now clear: **state** makes reference to **visual** state, while **props** are referred to application state (from domain model).
+After some hacking, experimentation and, ahem, [documentation reading](http://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html#components-are-just-state-machines) the concept is now clear: **state** makes reference to **visual** state, while **props** are referred to application state (from domain model).
 
 If you have doubts, make this **simple test**: if we need to access some state value outside a component, then use @prop else use @state.
 
@@ -87,4 +87,41 @@ React.render Transport(tempo: 123), document.getElementById('beatbox')
 
 Change script src in index.html to `/beatbox/app.js`. We shoud see a couple of buttons and a slider.
 
-#### [Demo: Transport first attempt](/beatbox-demo/transport/)
+<div class="demo">
+  <a href="/beatbox-demo/transport/">Demo: Transport, first attempt</a>
+</div>
+
+## Our first model: the Pattern
+
+As you can see in the demo, you can't move the tempo slider, but you can read by the console.log output that the events are dispatching. This is the **normal** operation, but it looks a little bit awkward at first. The is an important react concept, the **data flow is one way only**: a component will render a model. If the model doesn't change, view stay the same. And we didn't change the model... but we will write one first: (`public/models/pattern.js.coffee`)
+
+~~~coffee
+class Pattern
+  tempo: 123
+
+module.exports = Pattern
+~~~
+
+We bind the model to the component in the `app.js.coffee` file:
+
+~~~coffee
+Pattern = require('./models/pattern.js')
+Transport = React.createFactory(require('./components/transport.react.js'))
+
+pattern = new Pattern(120)
+React.render Transport(pattern: pattern), document.getElementById('beatbox')
+~~~
+
+And finally we change the `render` method of our TransportComponent so instead of `@props.tempo` we will use `@props.pattern.tempo`. Also the `handleTempoChange` method will be like this:
+
+~~~ Coffee
+TransportComponent = React.createClass
+  handleTempoChange: ->
+    nextTempo = @refs.tempoRange.getDOMNode().value
+    @props.pattern.tempo = nextTempo
+    @forceUpdate()
+~~~
+
+Now, the transport slider work as normal:
+
+[Demo 2: Pattern model and tempo slider](/beatbox-demo/pattern-model/index.html)
