@@ -1,9 +1,8 @@
 ---
-title: 'Beatbox 2: Create the user interface with react.js'
-# date: TBD When publishing
-tags: tutorial, web audio api, react, coffeescript
+:title: 'Beatbox 2: Create the user interface with react.js'
+:tags: tutorial, web audio api, react, coffeescript
+:date: 2014-11-02
 ---
-
 # Beatbox 2: Create the user interface with react.js
 
 In the [first part](/2014/10/31/beatbox-build-a-rhythm-machine-with-react-js.html) we setup a little development server and installed react library. We are ready to use it.

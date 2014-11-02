@@ -3,19 +3,14 @@
 :tags: tutorial, web audio api, react, coffeescript
 :date: 2014-10-31
 ---
+
 # Beatbox: build a rhythm machine with WebAudio API and React.js
 
-Encouraged by my first steps with Clojure and how popular React.js is within its
-community (via [om](https://github.com/swannodette/om)), I launched my first
-experiment: build a simple drum machine using WebAudio API and
-[CoffeeScript](http://coffeescript.org).
+Encouraged by my first steps with Clojure and how popular React.js is within its community (via [om](https://github.com/swannodette/om)), I launched my first experiment: build a simple drum machine using WebAudio API and [CoffeeScript](http://coffeescript.org).
 
 In this first part we'll setup the project using node, and build a simple server that tranform the coffeescript into javascript and concatenates the necessary files.
 
-In the second part ([Part 2 here](/)) we'll use react.js to create the user
-interface. In the third ([Part 3 here]()) we'll learn how to use the WebAudio
-API to load and play sounds. And in the fourth ([Part 4 here]()) we'll
-see how to schedule events and beat the machine. Let's go!
+In the second part ([Part 2 here](/2014/11/02/beatbox-2-create-the-user-interface-with-react-js.html) we'll use react.js to create the user interface. In the third ([Part 3 here]()) we'll learn how to use the WebAudio API to load and play sounds. And in the fourth ([Part 4 here]()) we'll see how to schedule events and beat the machine. Let's go!
 
 ### Prerequisites
 
