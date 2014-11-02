@@ -1,0 +1,29 @@
+a { text-decoration: none; }
+
+.beatbox-transport {
+  margin: 0 0 1em 5em; }
+
+.beatbox-sequence {
+  font-family: sans-serif;
+  width: 100%; overflow: hidden;
+}
+
+.beatbox-sequence a {
+  display: block;
+  float: left;
+}
+
+.beatbox-sequence .name {
+  text-align: right;
+  padding: 3px 0.5em;
+  width: 4em;
+}
+
+.beatbox-sequence .step {
+  padding: 3px 0.5em;
+  background-color: #efefef;
+  color: black;
+}
+.beatbox-sequence .step.muteOff {
+  background-color: green;
+}

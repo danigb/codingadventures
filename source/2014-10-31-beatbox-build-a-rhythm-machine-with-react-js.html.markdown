@@ -10,18 +10,21 @@ community (via [om](https://github.com/swannodette/om)), I launched my first
 experiment: build a simple drum machine using WebAudio API and
 [CoffeeScript](http://coffeescript.org).
 
-In this first part we'll setup the project using node, and build a simple
-server with express and browserify.
+In this first part we'll setup the project using node, and build a simple server that tranform the coffeescript into javascript and concatenates the necessary files.
 
 In the second part ([Part 2 here](/)) we'll use react.js to create the user
 interface. In the third ([Part 3 here]()) we'll learn how to use the WebAudio
 API to load and play sounds. And in the fourth ([Part 4 here]()) we'll
 see how to schedule events and beat the machine. Let's go!
 
-## Create the project and add dependencies
+### Prerequisites
 
-I assume you have `node` and `npm` installed. If it is not the case,
-take a look here: [https://github.com/npm/npm](https://github.com/npm/npm)
+A part from the standard technologies (html, javascript, css), some Coffeescript knowledge is needed. Also I assume you have `node` and `npm` installed. If it is not the case, take a look here: [https://github.com/npm/npm](https://github.com/npm/npm)
+
+Some love to rhythm machines will help ;-)
+
+
+## Create the project and add dependencies
 
 So, let's create the directory structure and (though this is optional)
 initialize our git repository locally using a predefined `.gitignore`:
