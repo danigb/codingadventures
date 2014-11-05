@@ -1,10 +1,10 @@
 ---
-:title: 'Beatbox: build a rhythm machine with WebAudio API and React.js'
+:title: 'Beatbox: build a rhythm machine with react & WebAudio API'
 :tags: tutorial, web audio api, react, coffeescript
 :date: 2014-10-31
 ---
 
-# Beatbox: build a rhythm machine with WebAudio API and React.js
+# Beatbox: build a rhythm machine with react and Web Audio API
 
 Encouraged by my first steps with Clojure and how popular React.js is within its community (via [om](https://github.com/swannodette/om)), I launched my first experiment: build a simple drum machine using WebAudio API and [CoffeeScript](http://coffeescript.org).
 
@@ -42,12 +42,9 @@ npm install --save-dev browserify watchify nodemon
 npm install --save-dev panel-static
 ~~~
 
-`npm init` will ask us some questions.
-Take note of the `--save` and `--save-dev` modifiers when installing the
-libraries.
+`npm init` will ask us some questions. Take note of the `--save` and `--save-dev` modifiers when installing the libraries.
 
-Browserify allows us to split the application in modules and declare their
-dependencies using the popular CommonJS syntax: `require` and `module.exports`
+Browserify allows us to split the application in modules and declare their dependencies using the popular CommonJS syntax: `require` and `module.exports`
 
 Unfortunately it doesn't work with Coffescript, so `panel-static` to the rescue.
 
@@ -103,9 +100,7 @@ If everything it's all right, we should see 'loading...' at
 
 ##Test browserify and coffeescript
 
-We'll add a couple of modules to test browserify. The first one
-`./public/js/app.js.coffee` is the app entry point (because is the one we
-referenced at `index.html`)
+We'll add a couple of modules to test browserify. The first one `./public/js/app.js.coffee` is the app entry point (because is the one we referenced at `index.html`, line 17)
 
 ~~~coffeescript
 Beatbox = require './beatbox.js'
@@ -129,4 +124,4 @@ A common mistake (at least for me) is to forget the `module.exports`
 declaration. First thing to check when you have strange exceptions at runtime.
 
 If you reload the browser and see 'Hello from beatbox!' then you are ready to
-[Beatbox 2: Create the user interface with react.js](). Move on!
+[Beatbox 2: Create the user interface with react.js](/2014/11/02/beatbox-2-create-the-user-interface-with-react-js.html). Move on!

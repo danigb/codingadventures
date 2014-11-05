@@ -5,6 +5,8 @@
 ---
 # Beatbox 2: Create the user interface with react.js
 
+![EKO Computerrhythm](http://bluestone.by/news_imgs/280420144.jpg)
+
 In the [first part](/2014/10/31/beatbox-build-a-rhythm-machine-with-react-js.html) we setup a little development server and installed react library. We are ready to use it.
 
 Now we'll use react to build the user interface.

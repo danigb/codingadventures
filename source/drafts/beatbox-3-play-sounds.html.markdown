@@ -10,7 +10,7 @@ In [the second part](/2014/11/02/beatbox-2-create-the-user-interface-with-react-
 
 If you look at the [user interface demo](), at the left of the sequence steps there is a link with the name of the instrument. The goal of this part is play the sound then the user clicks the name. Let's go!
 
-# Load sounds
+## Load sounds
 
 First of all, we need some sounds (samples) to play. As a fan of Sly & The Family Stone, I have predilection for a Maestro Rhythm King:
 
@@ -116,4 +116,20 @@ class Sampler
     source.start(0)
 
 module.exports = Sampler
+~~~
+
+That was more or less the same code as above, but we move the loading responsability inside SamplerInstrument, and the playing responsability inside Sampler. Also notice we move the creation of the AudioContext outside this module (as we'll need to share it with the sequencer).
+
+Another thing, related to Coffescript only: if you look at lines 92 and 93 I use `=>` operator instead of `->`. The first one returns a function binded to `this`. If we use the normal one (`->`) we couldn't use `@context` or `@buffer` inside the method.
+
+Also, I prefix private methods with an underscore (`_loadSample`, `_playBuffer`), but this is only a convention. Nothing prevents to be called outside, but it helps to understand the code.
+
+## UI interaction
+
+The most straightforward way to make a sample sound when user clicks over the sequence name is to add a handleStepClick method inside SequenceComponent class. It means that every instance of SequenceComponent should have access to the sampler (via @props). This has two problems: first, lot of boilerplate code. Second, is not conceptually desirable that Sequences knows anything about Samplers.
+
+A better (and common) approach is pass a handler function from Pattern to Sequence instances this way (in `pattern.react.js.coffee`):
+
+~~~coffee
+(Sequence(sequence: sequence, onNameClick: @handleNameClick) for sequence in pattern.sequences)
 ~~~
