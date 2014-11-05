@@ -4,16 +4,16 @@ date: 2014-10-21
 tags: clojure, overtone, sound, synth
 ---
 
-
-
-# Overtone Day 3: Generating sounds
+![Sound Effects in TV history](https://farm1.staticflickr.com/169/427116220_330c3b50cc_z.jpg?zz=1)
 
 Today I will try to learn how can I use Overtone to synthesize new sounds. Maybe
 its a goot time to take a look (and print!) the [Overtone cheatsheet](https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf)
 
+READMORE
+
 ## Hear an example
 
-Ok, again with overtone: create new file in our `livecoding` project:
+Ok, let's create new file in our `livecoding` project:
 `src/livecoding/generating_sounds.clj` and add a namespace:
 
 ~~~ clojure
@@ -21,8 +21,8 @@ Ok, again with overtone: create new file in our `livecoding` project:
   (:use overtone.live))
 ~~~
 
-We are going to take one [example](https://github.com/overtone/overtone/tree/master/src/overtone/examples)
- from Overtone and try to understand it:
+The flight plan is take one [example](https://github.com/overtone/overtone/tree/master/src/overtone/examples)
+ from Overtone repository and try to understand it:
 
 ~~~ clojure
 (demo 7 (lpf (mix (saw [50 (line 100 1600 5) 101 100.5]))
@@ -75,9 +75,9 @@ left or right speaker.
 >           line is completed. Default: NO-ACTION
 
 ~~~ clojure
-(line 100 1600 5)         => #<sc-ugen: line:ar [0]>
-(first (line 100 1600 5)) => [:id 765]
-(nth (line 100 1600 5) 2) => java.lang.UnsupportedOperationException: nth not supported on this type: SCUGen
+(line 100 1600 5)         # => #<sc-ugen: line:ar [0]>
+(first (line 100 1600 5)) # => [:id 765]
+(nth (line 100 1600 5) 2) # => java.lang.UnsupportedOperationException: nth not supported on this type: SCUGen
 ~~~
 
 Ok, it seems that lines *are not* sequences. Let's try to find more information
@@ -102,13 +102,13 @@ Finally, I arrived at [`Line` docs](http://doc.sccode.org/Classes/Line.html):
 We'll. Not very helpful, but lets try to hear it:
 
 ~~~ clojure
-(demo 5 (saw [(line 100 1600 5)]))  => #<synth-node[loading]: overtur.es.gef03/audition-synth 631>
+(demo 5 (saw [(line 100 1600 5)]))  # => #<synth-node[loading]: overtur.es.gef03/audition-synth 631>
 ~~~
 
 So, finally we can hear what the example does:
 
 ~~~ clojure
-(demo 5 (saw [50 (line 100 1600 5) 101 100.5]))  => #<synth-node[loading]: overtur.es.gef03/audition-synth 631>
+(demo 5 (saw [50 (line 100 1600 5) 101 100.5]))  # => #<synth-node[loading]: overtur.es.gef03/audition-synth 631>
 ~~~
 
 ## Mix and doc
@@ -145,7 +145,7 @@ Ok, let's try to understand last part of example. `(doc lf-tri)` gives:
 Let's try to hear it:
 
 ~~~ clojure
-(demo 5 (saw (lf-tri (line 200 400 5)))) => #<synth-node[loading]: overtur.es.gef03/audition-synth ...
+(demo 5 (saw (lf-tri (line 200 400 5)))) # => #<synth-node[loading]: overtur.es.gef03/audition-synth ...
 ~~~
 
 If we take a look to the console, we can see:

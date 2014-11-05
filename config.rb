@@ -7,10 +7,12 @@ activate :syntax,
 activate :blog do |blog|
   blog.tag_template = "tag.html"
   blog.calendar_template = "calendar.html"
+  blog.summary_separator = /READMORE/
 
-  blog.summary_generator = Proc.new do |article, content|
-    Nokogiri::HTML(content).at('p')
-  end
+  blog.layout = "layouts/article_layout"
+  #blog.summary_generator = Proc.new do |article, content|
+  #  Nokogiri::HTML(content).at('p')
+  #end
 end
 
 activate :drafts

@@ -4,10 +4,12 @@ date: 2014-10-15
 tags: clojure, light table, overtone, music theory, scales
 ---
 
-# Overtone Day 2: Playing Scales
+![Play again](http://www.retronaut.com/wp-content/uploads/2012/07/256.jpg)
 
 Today I want to learn how to play a sequence of notes with
 Overtone. Not so easy if, like me, you are new to Overtone and Clojure.
+
+READMORE
 
 To learn the basics of  Clojure you can follow the excellent
 [swannodette Clojure-LightTable tutorial](https://github.com/swannodette/lt-cljs-tutorial)

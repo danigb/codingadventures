@@ -4,8 +4,6 @@
 :date: 2014-10-31
 ---
 
-# Beatbox: build a rhythm machine with react and Web Audio API
-
 Encouraged by my first steps with Clojure and how popular React.js is within its community (via [om](https://github.com/swannodette/om)), I launched my first experiment: build a simple drum machine using WebAudio API and [CoffeeScript](http://coffeescript.org).
 
 In this first part we'll setup the project using node, and build a simple server that tranform the coffeescript into javascript and concatenates the necessary files.

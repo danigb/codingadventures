@@ -1,14 +1,18 @@
 ---
-title: 'Beatbox 3: play sounds'
-# date: TBD When publishing
-tags: tutorial, web audio api, coffeescript
+:title: 'Beatbox 3: play sounds'
+:tags: tutorial, web audio api, coffeescript
+:date: 2014-11-05
 ---
+![Sound Waves](http://upload.wikimedia.org/wikipedia/commons/9/93/PSM_V13_D058_Sound_waves_1.jpg)
 
-# Beatbox 3: play sounds
 
 In [the second part](/2014/11/02/beatbox-2-create-the-user-interface-with-react-js.html) of this tutorial we built the user interface for our drum machine. Now we are going to learn how to play sounds using the Web Audio API.
 
+READMORE
+
 If you look at the [user interface demo](), at the left of the sequence steps there is a link with the name of the instrument. The goal of this part is play the sound then the user clicks the name. Let's go!
+
+
 
 ## Load sounds
 
@@ -131,5 +135,35 @@ The most straightforward way to make a sample sound when user clicks over the se
 A better (and common) approach is pass a handler function from Pattern to Sequence instances this way (in `pattern.react.js.coffee`):
 
 ~~~coffee
-(Sequence(sequence: sequence, onNameClick: @handleNameClick) for sequence in pattern.sequences)
+# public/components/pattern.react.js.coffee
+...
+PatternComponent = React.createClass
+  handleNameClick: (name) ->
+    @props.sampler.playSample(name)
+
+  render: ->
+    pattern = @props.pattern
+    (div {className: 'beatbox-pattern'},
+      (Sequence(sequence: sequence, onNameClick: @handleNameClick) for sequence in pattern.sequences)
+    )
 ~~~
+
+The same way we attach handlers to normal HTML elements, we attach a handler to a Sequence component. We expect the component to give us the sequence name.
+
+Finally, we add bind the handler to the event in Sequence component:
+
+~~~coffee
+# public/components/sequence.react.js.coffee
+...
+SequenceComponent = React.createClass
+  ...
+  handleNameClick: (e) ->
+    sampleName = e.target.text
+    @props.onNameClick(sampleName)
+
+  render: ->
+    ...
+      (a {className: 'name', href: '#', onClick: @handleNameClick}, sequence.name)
+~~~
+
+[Demo 6: Play samples](/beatbox-demo/demo6-play-samples/index.html)
