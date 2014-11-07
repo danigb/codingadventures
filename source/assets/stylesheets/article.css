@@ -1,24 +1,28 @@
 
 
 article h1, article h2, article h3, article h4, article h5 {
-  font-family: 'Lora', Georgia, serif;
+  letter-spacing: -0.05em;
+  line-height: 1em;
+  font-family: 'PT Sans', 'Lora', Georgia, serif;
   font-weight: 300;
   margin-top: 1.5em;
   margin-bottom: 0em;
   color: #222; }
 article h1 {
+  font-weight: 400;
   font-size: 4em;
   text-transform: uppercase;
   line-height: 1em; }
 article h2 {
   margin-top: 2.5em;
-  font-size: 2em; }
+  margin-bottom: 0.5em;
+  font-size: 2.2em; }
 article h2 + p {
     margin-top: 0.5em; }
 
 article h3 {
+  font-size: 1.4em;
   font-weight: 400;
-  font-size: 0.925em;
   margin-top: 3em;
   text-transform: uppercase; }
 article h4, article h5, article h6 {
@@ -27,8 +31,9 @@ article h4, article h5, article h6 {
   margin-top: 3em;
   font-style: italic; }
 article ul, article ol {
-  list-style-position: inside;
-  padding: 0; }
+  list-style-position: outside;
+  padding: 0 0 0 1em; }
+article li { margin-top: 0.5em; }
 article blockquote {
   display: block;
   font-family: 'Source Code Pro', monospace;
@@ -42,16 +47,16 @@ article ul, article ol, article p, article blockquote {
   line-height: 1.5em; }
 article img, article object, article video, article audio, article figure, article iframe {
   max-width: 100%; }
+
 article pre, article code, article samp {
   font-family: 'Source Code Pro', monospace;
   font-size: 0.88; }
 
+article strong { font-weight: 600; }
+
 
 p code { font-size: 0.88em; padding-right: 0.2em; }
-article pre  {
-  padding: 0 0.3em;
-  font-size: 0.88em; }
-article pre code.hljs {}
+
 article div.update {
   border: 1px solid #888;
   padding: 5px 2em; }

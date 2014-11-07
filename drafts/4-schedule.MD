@@ -80,18 +80,3 @@ scheduler = new Scheduler context, tempo: 80, scheduleBeat: (beat, time)->
     if step.mute == false
       track.sample.play(time)
 ~~~
-
-# Some animation
-
-~~~
-npm install --save jquery
-~~~
-
-`app.js.coffee`
-~~~coffee
-$ = require 'jquery'
-scheduler = new Scheduler context, tempo: 80, scheduleBeat: (beat, time)->
-  pattern.playStepsAt(beat % 16, time)
-  $('.active').removeClass('active')
-  $(".beatbox-step.step-#{(beat % 16) + 1}").addClass('active')
-~~~

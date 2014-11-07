@@ -2,12 +2,14 @@
 # Time.zone = "UTC"
 
 activate :syntax,
-  line_numbers: true
+  line_numbers: false
 
 activate :blog do |blog|
   blog.tag_template = "tag.html"
   blog.calendar_template = "calendar.html"
   blog.summary_separator = /READMORE/
+  blog.permalink = ":year-:month-:day-:title"
+  blog.sources = "posts/:title.html"
 
   blog.layout = "layouts/article_layout"
   #blog.summary_generator = Proc.new do |article, content|

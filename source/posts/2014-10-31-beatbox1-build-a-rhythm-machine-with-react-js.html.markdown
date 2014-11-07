@@ -6,9 +6,11 @@
 
 Encouraged by my first steps with Clojure and how popular React.js is within its community (via [om](https://github.com/swannodette/om)), I launched my first experiment: build a simple drum machine using WebAudio API and [CoffeeScript](http://coffeescript.org).
 
+READMORE
+
 In this first part we'll setup the project using node, and build a simple server that tranform the coffeescript into javascript and concatenates the necessary files.
 
-In the second part ([Part 2 here](/2014/11/02/beatbox-2-create-the-user-interface-with-react-js.html) we'll use react.js to create the user interface. In the third ([Part 3 here]()) we'll learn how to use the WebAudio API to load and play sounds. And in the fourth ([Part 4 here]()) we'll see how to schedule events and beat the machine. Let's go!
+In the second part ([Part 2 here](/2014/11/02/beatbox2-create-the-user-interface-with-react-js.html) we'll use react.js to create the user interface. In the third ([Part 3 here](/2014-11-05-2014-11-05-beatbox3-play-sounds)) we'll learn how to use the WebAudio API to load and play sounds. And in the fourth ([Part 4 here](/2014-11-07-2014-11-07-beatbox4-time-is-on-my-side)) we'll see how to schedule events and beat the machine. Let's go!
 
 ### Prerequisites
 
@@ -48,10 +50,11 @@ Unfortunately it doesn't work with Coffescript, so `panel-static` to the rescue.
 
 ## Development server
 
-In `./server.js` we define our small development server (express and
-  panel-static do all the hard work):
+With express and panel-static doing all the hard work, create a simple server is really easy:
 
 ~~~javascript
+// ./server.js
+
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
@@ -101,25 +104,25 @@ If everything it's all right, we should see 'loading...' at
 We'll add a couple of modules to test browserify. The first one `./public/js/app.js.coffee` is the app entry point (because is the one we referenced at `index.html`, line 17)
 
 ~~~coffeescript
+# ./public/js/app.js.coffee
+
 Beatbox = require './beatbox.js'
 
 window.onload = ->
   document.getElementById('beatbox').innerHTML = Beatbox.hello()
 ~~~
 
-We use the `hello` method from the Beatbox module. Take care with file
-extensions: `require` works after coffeescript compilation. The Beatbox
-module lives here `public/js/beatbox.js.coffee`:
+We use the `hello` method from the Beatbox module. Take care with file extensions: `require` works after coffeescript compilation. Let's define the Beatbox module:
 
 ~~~coffeescript
+# ./public/js/beatbox.js.coffee
+
 Beatbox =
   hello: -> 'Hello from beatbox!'
 
 module.exports = Beatbox
 ~~~
 
-A common mistake (at least for me) is to forget the `module.exports`
-declaration. First thing to check when you have strange exceptions at runtime.
+A common mistake (at least for me) is to forget the `module.exports` declaration. First thing to check when you have strange exceptions at runtime.
 
-If you reload the browser and see 'Hello from beatbox!' then you are ready to
-[Beatbox 2: Create the user interface with react.js](/2014/11/02/beatbox-2-create-the-user-interface-with-react-js.html). Move on!
+If you reload the browser and see 'Hello from beatbox!' then you are ready to [Beatbox 2: Create the user interface with react.js](/2014/11/02/beatbox-2-create-the-user-interface-with-react-js.html). Move on!

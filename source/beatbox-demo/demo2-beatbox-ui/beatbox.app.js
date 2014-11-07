@@ -1,11 +1,9 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Pattern, PatternComponent, name, pattern, _i, _len, _ref;
+var BeatboxComponent, Pattern, name, pattern, _i, _len, _ref;
 
 Pattern = require('./models/pattern.js');
 
-PatternComponent = React.createFactory(require('./components/pattern.react.js'));
-
-pattern = new Pattern('beatbox', 16);
+pattern = new Pattern(16);
 
 _ref = ['ohat', 'hhat', 'snare', 'kick'];
 for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -13,13 +11,37 @@ for (_i = 0, _len = _ref.length; _i < _len; _i++) {
   pattern.addSequence(name);
 }
 
-React.render(PatternComponent({
+BeatboxComponent = React.createFactory(require('./components/beatbox.react.js'));
+
+React.render(BeatboxComponent({
+  tempo: 110,
   pattern: pattern
 }), document.getElementById('beatbox'));
 
 
 
-},{"./components/pattern.react.js":2,"./models/pattern.js":4}],2:[function(require,module,exports){
+},{"./components/beatbox.react.js":2,"./models/pattern.js":6}],2:[function(require,module,exports){
+var BeatboxComponent, Pattern, Transport, div;
+
+Pattern = React.createFactory(require('./pattern.react.js'));
+
+Transport = React.createFactory(require('./transport.react.js'));
+
+div = React.DOM.div;
+
+BeatboxComponent = React.createClass({
+  render: function() {
+    return div({
+      className: 'beatbox'
+    }, Transport(this.props), Pattern(this.props));
+  }
+});
+
+module.exports = BeatboxComponent;
+
+
+
+},{"./pattern.react.js":3,"./transport.react.js":5}],3:[function(require,module,exports){
 var PatternComponent, Sequence, div;
 
 Sequence = React.createFactory(require('./sequence.react.js'));
@@ -27,6 +49,9 @@ Sequence = React.createFactory(require('./sequence.react.js'));
 div = React.DOM.div;
 
 PatternComponent = React.createClass({
+  handleNameClick: function(name) {
+    return this.props.sampler.playSample(name);
+  },
   render: function() {
     var pattern, sequence;
     pattern = this.props.pattern;
@@ -39,11 +64,12 @@ PatternComponent = React.createClass({
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         sequence = _ref[_i];
         _results.push(Sequence({
-          sequence: sequence
+          sequence: sequence,
+          onNameClick: this.handleNameClick
         }));
       }
       return _results;
-    })());
+    }).call(this));
   }
 });
 
@@ -51,19 +77,18 @@ module.exports = PatternComponent;
 
 
 
-},{"./sequence.react.js":3}],3:[function(require,module,exports){
+},{"./sequence.react.js":4}],4:[function(require,module,exports){
 var SequenceComponent, a, div, _ref;
 
 _ref = React.DOM, div = _ref.div, a = _ref.a;
 
 SequenceComponent = React.createClass({
   handleStepClick: function(e) {
-    var step, stepNum;
-    stepNum = e.target.text;
-    step = this.props.sequence.steps[stepNum - 1];
-    step.mute = !step.mute;
+    e.preventDefault();
+    this.props.sequence.toggleStep(e.target.text);
     return this.forceUpdate();
   },
+  handleNameClick: function(e) {},
   render: function() {
     var sequence, step;
     sequence = this.props.sequence;
@@ -71,7 +96,8 @@ SequenceComponent = React.createClass({
       className: 'beatbox-sequence'
     }, a({
       className: 'name',
-      href: '#'
+      href: '#',
+      onClick: this.handleNameClick
     }, sequence.name), div({
       className: 'steps'
     }, (function() {
@@ -100,14 +126,52 @@ module.exports = SequenceComponent;
 
 
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+var TransportComponent, button, div, input, label, _ref;
+
+_ref = React.DOM, div = _ref.div, input = _ref.input, button = _ref.button, label = _ref.label;
+
+TransportComponent = React.createClass({
+  handleTempoChange: function(e) {
+    var nextTempo;
+    nextTempo = e.target.value;
+    return console.log("Tempo changed: " + nextTempo);
+  },
+  handlePlay: function() {
+    return console.log("Play");
+  },
+  handleStop: function() {
+    return console.log("Stop");
+  },
+  render: function() {
+    return div({
+      className: 'beatbox-transport'
+    }, button({
+      onClick: this.handlePlay
+    }, '▶ Play'), button({
+      onClick: this.handleStop
+    }, '■ Stop'), label(null, "Tempo: " + this.props.tempo), input({
+      type: 'range',
+      step: 1,
+      min: 30.0,
+      max: 160,
+      onChange: this.handleTempoChange,
+      value: this.props.tempo
+    }));
+  }
+});
+
+module.exports = TransportComponent;
+
+
+
+},{}],6:[function(require,module,exports){
 var Pattern, Sequence;
 
 Sequence = require('./sequence.js');
 
 Pattern = (function() {
-  function Pattern(tempo, length) {
-    this.tempo = tempo;
+  function Pattern(length) {
     this.length = length;
     this.sequences = [];
   }
@@ -124,7 +188,7 @@ module.exports = Pattern;
 
 
 
-},{"./sequence.js":5}],5:[function(require,module,exports){
+},{"./sequence.js":7}],7:[function(require,module,exports){
 var Sequence;
 
 Sequence = (function() {
@@ -144,6 +208,13 @@ Sequence = (function() {
       return _results;
     }).call(this);
   }
+
+  Sequence.prototype.toggleStep = function(stepNum) {
+    var step;
+    this.stepNum = stepNum;
+    step = this.steps[stepNum - 1];
+    return step.mute = !step.mute;
+  };
 
   return Sequence;
 

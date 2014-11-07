@@ -4,7 +4,8 @@
 :date: 2014-11-02
 ---
 
-![EKO Computerrhythm](http://bluestone.by/news_imgs/280420144.jpg)
+![Roland TR-808](http://upload.wikimedia.org/wikipedia/commons/b/be/Roland_TR-808_drum_machine.jpg)
+
 
 In the [first part](/2014/10/31/beatbox-build-a-rhythm-machine-with-react-js.html) we setup a little development server and installed react library. We are ready to use it.
 
@@ -14,7 +15,7 @@ READMORE
 
 ## Components
 
-The most important concept inside react is 'reusable components'. They are a way to encapsulate some bits of html, data and functionallity with a well defined interface. Yes, you read well: the markup code will be defined **inside** the component source. They created a javascript syntax extension called [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in order to simplify the process, but we won't use it since we have Coffeescript powers (more on that just below).
+The most important concept inside react is 'reusable components'. They are a way to encapsulate some bits of html, data and functionallity with a well defined interface. Yes, you read well: **the markup code will be defined inside the component source**. They created a javascript syntax extension called [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in order to simplify the process, but we won't use it since we have Coffeescript powers (more on that just below).
 
 Normally, every component has a model associated to it that represents the application data we want to display and interact to. React doesn't provide any model facilities, so we have to roll our own.
 
@@ -46,9 +47,12 @@ A good example of @state could be the `visible` state of a collapsable panel. Th
 ## First component: the transport view
 
 In sequencer softwares, the transport is where the start and stop button lives. We will add also a tempo input using a range.
-Here is my first attempt to write it `public/beatbox/components/transport.react.js.coffee`:
+
+Here is my first attempt to write it:
 
 ~~~coffeescript
+# public/beatbox/components/transport.react.js.coffee
+
 React = require 'react'
 
 {div, input, button, label} = React.DOM
@@ -63,15 +67,16 @@ TransportComponent = React.createClass
 
   render: ->
     (div {className: 'beatbox-transport'},
-      (button {onClick: @handlePlay }, 'Play' )
-      (button {onClick: @handleStop }, 'Stop' )
+      (button {onClick: @handlePlay }, '▶ Play' )
+      (button {onClick: @handleStop }, '■ Stop' )
       (label null, "Tempo: #{@props.tempo}")
       (input {type: 'range', step: 1, min: 30.0, max: 160,
-        onChange: @handleTempoChange}, value: @props.tempo
+      onChange: @handleTempoChange, value: @props.tempo}
       )
     )
 
 module.exports = TransportComponent
+
 ~~~
 
 There are several things to note here:
@@ -80,18 +85,20 @@ There are several things to note here:
 - We bind events to functions with plain javascript, but in a way that resembles very much to html. Note that the name of the event is in camel cased (`onClick`) instead of the html standard `onclick`
 - There's no magin in event handlers. It's the standard DOM: we receive a event parameter and we can access the `target` there (among other things).
 
-In order to see the component in action, we need to create and add it to the browser document. We'll do this kind of plumbing inside `public/beatbox/app.js.coffee`:
+In order to see the component in action, we need to create and add it to the browser document. We'll do this kind of plumbing inside `app.js.coffee`:
 
 ~~~coffeescript
+# public/beatbox/app.js.coffee
+
 React = require 'react'
 Transport = React.createFactory(require('./components/transport.react.js'))
 
 React.render Transport(tempo: 123), document.getElementById('beatbox')
 ~~~
 
-Change script src in index.html to `/beatbox/app.js`. We shoud see a couple of buttons and a slider.
+Change script's `src` attribute at `index.html` to `/beatbox/app.js` and you shoud see a couple of buttons and a slider.
 
-[Demo 1: Transport, first try](/beatbox-demo/transport/index.html)
+[Demo 1: Transport, first try](/beatbox-demo/demo1-transport/index.html)
 
 
 ### Controlled components
@@ -100,72 +107,77 @@ If you open the browser's web console inside the demo, you will notice that **yo
 
 It's called a 'controlled component' and you can read more about it [here](http://facebook.github.io/react/docs/forms.html#controlled-components)
 
-## Our first model: the Pattern
+## Pattern and Sequence, the models.
 
-In a classic drum machine there's a line of buttons. I'll call it 'Sequence':
+First, nomenclature. Our drum machine will have a matrix of buttons:
 
-![Roland TR-808](http://upload.wikimedia.org/wikipedia/commons/b/be/Roland_TR-808_drum_machine.jpg)
+![EKO Computerrhythm](http://bluestone.by/news_imgs/280420144.jpg)
 
-_(image source: wikipedia)_
+I will call `Pattern` to this matrix, and each row will be a `Sequence` associated to one sound.
 
-Beatbox will have one of this sequence for each instrument, creating a kind of a matrix that I will call 'Pattern'. Let's choose it as our first model to code (`public/models/pattern.js.coffee`)
-
-~~~coffee
-class Pattern
-  constructor: (@tempo, @length) ->
-    @sequences = []
-
-module.exports = Pattern
-~~~
-
-We bind the model to the component in the `app.js.coffee` file:
+React doesn't provide any model infrastructure. The one we are going to build are trivial since there's no server communication involved. Let's start with the `Sequence`:
 
 ~~~coffee
-Pattern = require('./models/pattern.js')
-Transport = React.createFactory(require('./components/transport.react.js'))
+# public/beatbox/models/sequence.js.coffee
 
-pattern = new Pattern(120)
-React.render Transport(pattern: pattern), document.getElementById('beatbox')
-~~~
-
-And finally we change the `render` method of our TransportComponent so instead of `@props.tempo` we will use `@props.pattern.tempo`. Also the `handleTempoChange` method will be like this:
-
-~~~coffee
-TransportComponent = React.createClass
-  handleTempoChange: ->
-    nextTempo = @refs.tempoRange.getDOMNode().value
-    @props.pattern.tempo = nextTempo
-    @forceUpdate()
-~~~
-
-Now, the transport slider work as normal.
-
-[Demo 2: Pattern model and tempo slider](/beatbox-demo/pattern-model/index.html)
-
-## Sequences
-
-Our beatbox is going to be a kind of matrix of buttons (a Pattern) where each row is a Sequence (`public/beatbox/models/sequence.js.coffee`):
-
-~~~coffee
 class Sequence
   constructor: (@name, @stepCount) ->
     @steps = ({num: step, mute: true} for step in [1..@stepCount])
 
+  toggleStep: (@stepNum) ->
+    step = @steps[stepNum - 1]
+    step.mute = !step.mute
+
 module.exports = Sequence
+
 ~~~
 
-The model is trivial. Let's move to the component (public/beatbox/components/sequence.react.js.coffee):
+And then a 'Pattern' with the ability to add sequences:
 
 ~~~coffee
+# public/beatbox/models/pattern.js.coffee
+
+Sequence = require './sequence.js'
+
+class Pattern
+  constructor: (@length) ->
+    @sequences = []
+
+  addSequence: (name) ->
+    @sequences.push(new Sequence(name, @length))
+
+module.exports = Pattern
+~~~
+
+And we create a Pattern with four empty sequences:
+
+~~~coffee
+# public/beatbox/app.js.coffee
+
+...
+
+Pattern = require('./models/pattern.js')
+pattern = new Pattern(16)
+pattern.addSequence(name) for name in ['ohat', 'hhat', 'snare', 'kick']
+~~~
+
+## Pattern and Sequence, the components
+
+Here is where React shines. First we are going to create the Sequence component. A `SequenceComponent` is just basically a `div` for each step in the sequence inside a another div (the sequence itself).
+
+Also we want to mute or unmute the step when the user clicks over the step div:
+
+~~~coffee
+# public/beatbox/components/sequence.react.js.coffee
+
 React = require 'react'
 
 {div, a} = React.DOM
 
 SequenceComponent = React.createClass
   handleStepClick: (e) ->
-    stepNum = e.target.text
-    step = @props.sequence.steps[stepNum - 1]
-    step.mute = !step.mute
+    e.preventDefault()
+    @props.sequence.toggleStep(e.target.text)
     @forceUpdate()
 
   render: ->
@@ -184,38 +196,18 @@ SequenceComponent = React.createClass
 module.exports = SequenceComponent
 ~~~
 
-The component is also quite straightforward. As before, we bind the event with a function using pure javascript, no magic here.
-
-Let's test out our new component in `app.js.coffee`:
-
-~~~coffee
-Sequence = require('./models/sequence.js')
-SequenceComponent = React.createFactory(require('./components/sequence.react.js'))
-
-sequence = new Sequence('kick', 16)
-React.render SequenceComponent(sequence: sequence), document.getElementById('beatbox')
-~~~
-
-[Demo 3: One sequence](/beatbox-demo/sequence-model/index.html)
+As before, we bind the event with a function using pure javascript, no magic here (and we call `preventDefault` to avoid '#' at the url). Also we use the standard DOM `Event` object to access the `taget`'s text. Finally, we assume *someone* associated a `sequence` model to this component (via `@props`).
 
 ## Component composability
 
-We want to display more than one sequence at once, so we are going to create a PatternComponent with SequenceComponent as children. Let's start with models first: add `addSequence` method to the 'Pattern' model (`public/models/pattern.js.coffee`):
+We want to display more than one sequence at once, so we are going to create a PatternComponent with SequenceComponent as children. This is called 'component composability' in react's nomenclature. As you will see, react makes no distinction between standard HTML components or custom components:
 
 ~~~coffee
-Sequence = require './sequence.js'
+# public/beatbox/components/pattern.react.js.coffee
 
-class Pattern
-  ...
-  addSequence(name) ->
-    @sequences.push(new Sequence(name, @length))
-~~~
-
-Then create the PatternComponent class  (`public/components/pattern.react.js.coffee`):
-
-~~~coffee
 React = require 'react'
 Sequence = React.createFactory(require('./sequence.react.js'))
+
 {div} = React.DOM
 
 PatternComponent = React.createClass
@@ -228,49 +220,46 @@ PatternComponent = React.createClass
 module.exports = PatternComponent
 ~~~
 
-We do component composition the same way we use html components. Cool.
+## All together now
 
-Let's do some plumbing ('public/beatbox/app.js.coffee'):
-
-~~~coffee
-Pattern = require('./models/pattern.js')
-PatternComponent = React.createFactory(require('./components/pattern.react.js'))
-
-pattern = new Pattern(120, 16)
-pattern.addSequence(name) for name in ['ohat', 'hhat', 'snare', 'kick']
-React.render PatternComponent(pattern: pattern), document.getElementById('beatbox')
-~~~
-
-[Demo 3: Pattern Component](/beatbox-demo/pattern-component/index.html)
-
-## All together now:
-
-Finally, we want to show the pattern **and** the transport. That's what BeatboxComponent is for (`public/components/beatbox.react.js.coffee`):
+Finally, since we want to show the pattern and the transport components at the same time, we need a wrapper of both. Thats out `BeatboxComponent`:
 
 ~~~coffee
+# public/beatbox/components/beatbox.react.js.coffee
+
 React = require 'react'
 Pattern = React.createFactory(require('./pattern.react.js'))
 Transport = React.createFactory(require('./transport.react.js'))
 
+{div} = React.DOM
+
 BeatboxComponent = React.createClass
   render: ->
     (div {className: 'beatbox'},
-      (Transport(pattern: @props.pattern))
-      (Pattern(pattern: @props.pattern))
+      (Transport(@props))
+      (Pattern(@props))
     )
 
 module.exports = BeatboxComponent
 ~~~
 
-And `app.js.coffee`:
+And some plumbing at `app.js.coffee`:
 
 ~~~coffee
+# public/beatbox/app.js.coffee
+
+React = require('react')
 Pattern = require('./models/pattern.js')
-BeatboxComponent = React.createFactory(require('./components/beatbox.react.js'))
 
 pattern = new Pattern(110, 16)
 pattern.addSequence(name) for name in ['ohat', 'hhat', 'snare', 'kick']
-React.render BeatboxComponent(pattern: pattern), document.getElementById('beatbox')
+
+BeatboxComponent = React.createFactory(require('./components/beatbox.react.js'))
+React.render BeatboxComponent(tempo: 110, pattern: pattern), document.getElementById('beatbox')
 ~~~
 
-[Demo 4: UI Assembled](/beatbox-demo/beatbox-component/index.html)
+[Demo 2: UI Assembled](/beatbox-demo/demo2-beatbox-ui/index.html)
+
+*Notice that tempo slider still doesn't work. We will fix it in the [fourth part of this tutorial](/2014/11/07/beatbox-4-time-is-on-my-side)*
+
+Ok, that was all for today. In the [thirth part](/2014/11/05/beatbox-3-play-sounds.html) we will use WebAudio API to play sounds, and [finally](/2014/11/07/beatbox-4-time-is-on-my-side.html) sequence them in time.

@@ -16,7 +16,7 @@ body {
   margin: 0;
   /*font-family: 'Lora', Georgia, serif;*/
   /*font-family: 'Lora', Georgia, serif;*/
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'PT Sans', sans-serif;
   font-size: 1em;
   color: #222;
   font-weight: 300; }
@@ -32,7 +32,6 @@ a:hover {
 }
 
 h2 a { color: #222; }
-
 
 .content {
   padding: 0.809em;

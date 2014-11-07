@@ -8,6 +8,7 @@
   border-radius: 3px;
 }
 .summary h2 { text-transform: uppercase; font-size: 3em; margin-top: 1em; }
+.summary img { max-height: 240px; }
 .summary a.read-more { font-size: 0.88em; margin-top: -0.5em; display: block; }
 .summary h2 span.date {
   display: none;
