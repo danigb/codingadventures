@@ -27,3 +27,5 @@ a { text-decoration: none; }
 .beatbox-sequence .step.muteOff {
   background-color: green;
 }
+.beatbox-sequence .step.muteOn.active { background-color: #333; }
+.beatbox-sequence .step.muteOff.active { background-color: #0F0; }
