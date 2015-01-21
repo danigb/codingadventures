@@ -35,5 +35,7 @@ h2 a { color: #222; }
 
 .content {
   padding: 0.809em;
-  max-width: 40em;
+  max-width: 45em;
   margin: auto; }
+
+#drafts { opacity: 0.5; }

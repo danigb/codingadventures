@@ -5,7 +5,7 @@ article h1, article h2, article h3, article h4, article h5 {
   line-height: 1em;
   font-family: 'PT Sans', 'Lora', Georgia, serif;
   font-weight: 300;
-  margin-top: 1.5em;
+  margin-top: 0.25em;
   margin-bottom: 0em;
   color: #222; }
 article h1 {
@@ -30,6 +30,13 @@ article h4, article h5, article h6 {
   font-size: 0.925em;
   margin-top: 3em;
   font-style: italic; }
+
+article .date {
+  display: block;
+  color: #444;
+  letter-spacing: 0.01em;
+  font-size: 0.3em;}
+
 article ul, article ol {
   list-style-position: outside;
   padding: 0 0 0 1em; }

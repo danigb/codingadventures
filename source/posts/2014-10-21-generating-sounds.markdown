@@ -4,8 +4,6 @@ date: 2014-10-21
 tags: clojure, overtone, sound, synth
 ---
 
-![Sound Effects in TV history](https://farm1.staticflickr.com/169/427116220_330c3b50cc_z.jpg?zz=1)
-
 Today I will try to learn how can I use Overtone to synthesize new sounds. Maybe
 its a goot time to take a look (and print!) the [Overtone cheatsheet](https://github.com/overtone/overtone/raw/master/docs/cheatsheet/overtone-cheat-sheet.pdf)
 

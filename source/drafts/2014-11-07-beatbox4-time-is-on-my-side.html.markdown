@@ -3,10 +3,9 @@
 :tags:
 :date: 2014-11-07
 ---
-The last part is to add a note shedule mechanism. We are going to use the same technique described in the excellent tutorial [A Tale of Two Clocks - Scheduling Web Audio with Precision](http://www.html5rocks.com/en/tutorials/audio/scheduling).
+The last part is to add a note schedule mechanism. We are going to use the same technique described in the excellent tutorial [A Tale of Two Clocks - Scheduling Web Audio with Precision](http://www.html5rocks.com/en/tutorials/audio/scheduling).
 
 READMORE
-
 
 The idea: when press play we are going to periodically calculate the distance in time from the current time to the next beat the rhythm box has to play. If that distance is less than a threshold, we will schedule the samples using the Web Audio API timing infrastructure.
 
@@ -24,21 +23,22 @@ tickIntervalMs = 100
 
 class Scheduler
   constructor: (@context, options) ->
-    @setTempo(options.tempo || 120)
+    @ticksPerBeat = options.ticksPerBeat || 2
     @onStart = options.onStart || ( -> )
     @onStop = options.onStop || ( -> )
     @onPlay = options.player || ( -> )
     @_timerID = null
+    @setTempo(options.tempo || 120)
 
   setTempo: (newTempo) ->
     @tempo = newTempo
-    @secondsPerBeat = 60.0 / @tempo
+    @_secondsPerTicks = 60.0 / (@tempo * @ticksPerBeat)
 
   start: ->
     return if @_timerID != null
-    @nextBeat = 0
-    @nextBeatTime = @context.currentTime
-    @_timerID = setInterval(@_tick, tickIntervalMs)
+    @_nextTick = 0
+    @_nextTickTime = @context.currentTime
+    @_timerID = setInterval(@_schedule, tickIntervalMs)
     @onStart()
 
   stop: ->
@@ -47,17 +47,18 @@ class Scheduler
     @_timerID = null
     @onStop()
 
-  _tick: =>
-    while @nextBeatTime - @context.currentTime < scheduleThreshold
-      @onPlay(@nextBeat, @nextBeatTime)
-      @nextBeat++
-      @nextBeatTime += @secondsPerBeat
-
+  _schedule: =>
+    while @_nextTickTime - @context.currentTime < scheduleThreshold
+      @onPlay(@_nextTick, @_nextTickTime)
+      @_nextTick++
+      @_nextTickTime += @_secondsPerTick
 
 module.exports = Scheduler
 ~~~
 
-Let's add some wire and get meditation looking at the console output:
+The code is quite simple. The schedule logic resides at private `_tick` method. The rest is more or less boiler plate code: a configurable ticks per beat options, and some `onEvent` methods to attach listerens.
+
+Let's try it and get meditation for free looking at the console output:
 
 ~~~coffee
 # public/beatbox/app.js.coffee
@@ -66,8 +67,9 @@ Let's add some wire and get meditation looking at the console output:
 
 Scheduler = require('./audio/scheduler.js')
 scheduler = new Scheduler context, time: 110)
-scheduler.onPlay = (beat, time) ->
-  console.log("Beat: #{beat} at #{time}")
+
+scheduler.onPlay = (tick, time) ->
+  console.log("Beat: #{tick} at #{time}")
 
 scheduler.start()
 ~~~
@@ -81,8 +83,8 @@ The method to play the sounds is really straightforward:
 
 ...
 
-scheduler.onPlay = (beat, time)->
-  stepIndex = beat % sequence.length
+scheduler.onPlay = (tick, time)->
+  stepIndex = tick % sequence.length
   for sequence in pattern.sequences
     step = sequence.steps[stepIndex]
     sampler.playSample(sequence.name, time) if !step.mute

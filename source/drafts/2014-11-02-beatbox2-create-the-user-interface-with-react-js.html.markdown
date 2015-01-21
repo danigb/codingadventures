@@ -1,5 +1,5 @@
 ---
-:title: 'Beatbox 2: Create the user interface with react.js'
+:title: 'Beatbox 2: Create the user interface with react'
 :tags: tutorial, web audio api, react, coffeescript
 :date: 2014-11-02
 ---
@@ -7,22 +7,20 @@
 ![Roland TR-808](http://upload.wikimedia.org/wikipedia/commons/b/be/Roland_TR-808_drum_machine.jpg)
 
 
-In the [first part](/2014/10/31/beatbox-build-a-rhythm-machine-with-react-js.html) we setup a little development server and installed react library. We are ready to use it.
-
-Now we'll use react to build the user interface.
+In the [first part](/2014/10/31/beatbox-build-a-rhythm-machine-with-react-js.html) we setup our development tools. Now we'll use react library to build the user interface.
 
 READMORE
 
 ## Components
 
-The most important concept inside react is 'reusable components'. They are a way to encapsulate some bits of html, data and functionallity with a well defined interface. Yes, you read well: **the markup code will be defined inside the component source**. They created a javascript syntax extension called [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) in order to simplify the process, but we won't use it since we have Coffeescript powers (more on that just below).
+The most important concept inside react is 'reusable components'. They encapsulates some bits of html, data and functionality with a well defined interface. Yes, you read well: **the markup code will be defined inside the component source**. There's a javascript syntax extension called [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) to make the code look more *htmlish*, but we won't use it since we have coffeescript super-powers (more on that just below).
 
 Normally, every component has a model associated to it that represents the application data we want to display and interact to. React doesn't provide any model facilities, so we have to roll our own.
 
 With this two concepts in mind, our application directory structure will be something like this:
 
 ~~~coffee
-public/beatbox
+client
   |
   + app.js.coffee
   + components
@@ -36,13 +34,96 @@ public/beatbox
 
 ### Disgression @props vs. @state
 
-Every component has two attributes (`@props` and `@state`) that contains application state. One of the first difficulties for me at the beginning was understand when I should use one or the other.
+Every component has two attributes (`@props` and `@state`) that contains application state. The biggest difficulty I found at the beginning was understand when I should use one or the other.
 
-After some hacking, experimentation and, ahem, [documentation reading](http://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html#components-are-just-state-machines) the concept is now clear: **state** makes reference to **visual** state, while **props** are referred to application state (from domain model).
+I'm not the only one to have this problem, it seems to be a very common one. There's some [react's documentation](http://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html#components-are-just-state-machines), with some condradictory (in my opinion advices):
 
-If you have doubts, make this **simple test**: if we need to access some state value outside a component, then use @prop else use @state.
+> "Most of your components should simply take some data from props and render it"
 
-A good example of @state could be the `visible` state of a collapsable panel. This is pure UI state, and normally we don't need to know outside the component if the panel is visible or hidden.
+> State should contain data that a component's event handlers may change to trigger a UI update.
+
+But until I read the Hoosuite's [react-guide about props vs state](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md) I didn't catch the whole idea:
+
+> Component without state is preferable. Even though you clearly **can't do without state** an interactive app
+
+> props are a Component's configuration (...) A Component cannot change its props, but it is responsible for putting together the props of its child Components.
+
+> The state starts with a default value when a Componenent mounts and then suffers from mutations in time (mostly generated from user events) ... A Component manages its own state internally, and don't know anything about children's state.
+
+### Disgression: application architecture
+
+The next question is, how to maintain the domain models sync'ed with the components state? There's a proposed react architecture called [flux](http://facebook.github.io/flux/docs/overview.html) with detailed information about this.
+
+The complete architecture is too much for this tutorial (since there's no server side, for example) but I will follow the core idea: unidirectional data flow.
+
+What I we will do:
+
+- Each component will have one associated model
+- When a model is changed, it will trigger an update event
+- The component will subscribe model's update events, and will update it's state when one is recived.
+- When a user interacts with a component, it will change the associated model (instead of its own the state)
+
+~~~
+
+User ---> (interacts with) ---> Component ---> (updates)
+                                    Ʌ             |
+                                    |             V
+                                  (event) <---  Model
+~~~
+
+
+
+
+## First component: a sequence
+
+Our drum machine will have a matrix of buttons:
+
+![EKO Computerrhythm](http://bluestone.by/news_imgs/280420144.jpg)
+
+I will call **pattern** to this matrix, and each row will be a **sequence**. Each sequence is associated to one sound (kick, snare...).
+
+Let's start with the Sequence model:
+
+~~~coffee
+# client/models/sequence.js.coffee
+
+MIN_VOL = 0
+MAX_VOL = 2
+
+class Sequence
+  constructor: (@soundName, @length, @onUpdate) ->
+    @steps = ({num: step, vol: MIN_VOL, playing: false } for step in [0..@length - 1])
+    @playingStep = null
+    @onUpdates = []
+
+  toggleVol: (index) ->
+    step = @steps[index % @length]
+    step.vol = (step.vol + 1) % (MAX_VOL + 1)
+    @fireUpdated()
+    step
+
+  setPlaying: (index) ->
+    @playingStep.active = false if @playingStep
+    @playingStep = if index < 0 then null else @steps[index % @length]
+    @playingStep.playing = true if @playingStep
+    @fireUpdated()
+    @playingStep
+
+  subscribe: (callback) -> @onUpdates.push callback
+  fireUpdated: -> callback() for callback in @onUpdates
+
+module.exports = Sequence
+~~~
+
+Some things to notice:
+
+- Each sequence is an array of steps. Steps have a volume (0 means no sound, 1 normal, 2 loud) and may be being played at current time.  
+- `toggleVol` changes increments step volume by 1. If MAX_VOL is reached, then it mutes the step (vol = 0). The step index works like if the sequence is a loop: it can be greater than the sequence length.
+- `setPlaying` sets the currently playing step. **Only one step can be played at time**. It's stored inside `playingStep` attribute
+- `subscribe` and `fireUpdated` are the event plumbing
+
+Let's create our first component:
+
 
 ## First component: the transport view
 
@@ -58,9 +139,15 @@ React = require 'react'
 {div, input, button, label} = React.DOM
 
 TransportComponent = React.createClass
+  propTypes:
+    tempo: React.PropTypes.number.isRequired
+
+  getInitialState: ->
+    tempo: @props.tempo
+
   handleTempoChange: (e) ->
-    nextTempo = e.target.value
-    console.log("Tempo changed: #{nextTempo}")
+    newTempo = e.target.value
+    @setState(tempo: newTempo)
 
   handlePlay: -> console.log("Play")
   handleStop: -> console.log("Stop")
@@ -69,21 +156,22 @@ TransportComponent = React.createClass
     (div {className: 'beatbox-transport'},
       (button {onClick: @handlePlay }, '▶ Play' )
       (button {onClick: @handleStop }, '■ Stop' )
-      (label null, "Tempo: #{@props.tempo}")
+      (label null, "Tempo: #{@state.tempo}")
       (input {type: 'range', step: 1, min: 30.0, max: 160,
-      onChange: @handleTempoChange, value: @props.tempo}
+      onChange: @handleTempoChange, value: @state.tempo}
       )
     )
 
 module.exports = TransportComponent
-
 ~~~
 
 There are several things to note here:
 
+- Since the component is going to change the tempo, it's stored inside `state`
 - As I told you before, I **don't** use react's  [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) syntax. Some coffeescript sugar is applied instead: [destructuring assignment](http://coffeescript.org/#destructuring) at line 3 and then some clever use of coffeescript flexible syntax. The idea is [not mine](http://blog.vjeux.com/2013/javascript/react-coffeescript.html) and I like it.
 - We bind events to functions with plain javascript, but in a way that resembles very much to html. Note that the name of the event is in camel cased (`onClick`) instead of the html standard `onclick`
-- There's no magin in event handlers. It's the standard DOM: we receive a event parameter and we can access the `target` there (among other things).
+- There's no magic in event handlers. It uses the standard DOM event mechanism: we receive an `event` parameter so we can access the `target` there (among other things).
+- propTypes attribute is optional. It's used by react to [validate component properties](http://facebook.github.io/react/docs/reusable-components.html#prop-validation) (in development mode only) and, more important to me, add some documentation to the props (read: configuration) of the component.
 
 In order to see the component in action, we need to create and add it to the browser document. We'll do this kind of plumbing inside `app.js.coffee`:
 
@@ -101,36 +189,13 @@ Change script's `src` attribute at `index.html` to `/beatbox/app.js` and you sho
 [Demo 1: Transport, first try](/beatbox-demo/demo1-transport/index.html)
 
 
-### Controlled components
-
-If you open the browser's web console inside the demo, you will notice that **you can't move the tempo slider** but the method `handleTempoChange` is  **executed and print different values!** This is the **normal react's operation**, but it looks a little bit awkward at first. The is an important react concept, the **data flow is one way only**: a component will render a model. If the model doesn't change, view stay the same.
-
-It's called a 'controlled component' and you can read more about it [here](http://facebook.github.io/react/docs/forms.html#controlled-components)
-
 ## Pattern and Sequence, the models.
 
-First, nomenclature. Our drum machine will have a matrix of buttons:
 
-![EKO Computerrhythm](http://bluestone.by/news_imgs/280420144.jpg)
-
-I will call `Pattern` to this matrix, and each row will be a `Sequence` associated to one sound.
 
 React doesn't provide any model infrastructure. The one we are going to build are trivial since there's no server communication involved. Let's start with the `Sequence`:
 
-~~~coffee
-# public/beatbox/models/sequence.js.coffee
 
-class Sequence
-  constructor: (@name, @stepCount) ->
-    @steps = ({num: step, mute: true} for step in [1..@stepCount])
-
-  toggleStep: (@stepNum) ->
-    step = @steps[stepNum - 1]
-    step.mute = !step.mute
-
-module.exports = Sequence
-
-~~~
 
 And then a 'Pattern' with the ability to add sequences:
 

@@ -4,8 +4,6 @@ date: 2014-10-14
 tags: overtone, light table, setup, clojure, leiningen
 ---
 
-![Overtone Road](https://farm9.staticflickr.com/8502/8305795212_be0f4a9dd5_c.jpg)
-
 This is the first post of a series about learn Overtone. For me that means learn Clojure. So here I will show my process: the progress and the failures and I hope its useful for someone.
 
 READMORE
