@@ -1,0 +1,52 @@
+html {
+  font-family: 'PT Sans', sans-serif;
+}
+
+.transport { margin-bottom: 1em; }
+.transport button {
+  border: 0 solid #BBB;
+  background-color: #efefef;
+  border-radius: 2px;
+  font-size: 1.5em;
+}
+.transport button.disabled {
+  color: #aaa;
+}
+.transport .stop {
+  font-size: 2.5em;
+  line-height: 0.3em;
+  padding: 0.1em 0.1em 0.4em 0.1em;
+}
+
+.transport input[type=text] {
+  border: 0;
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 1.5em;
+  width: 2em;
+}
+
+.sequence {
+  width: 100%; overflow: hidden;
+}
+
+.sequence a {
+  float: left;
+  color: #333;
+  text-decoration: none;
+  background-color: #efefef;
+  padding: 0.2em 0.5em;
+  margin: 1px 1px 0 0;
+  border-radius: 2px;
+}
+.sequence a.sample {
+  text-align: right;
+  margin-right: 0.5em;
+  width: 3em;
+}
+
+.sequence .step.active { background-color: #AAA; }
+.sequence .step.vol-1 { background-color: #FA0; }
+.sequence .step.vol-1.active { background-color: #FF3; }
+.sequence .step.vol-2 { background-color: #0F0; }
+.sequence .step.vol-2.active { background-color: #4F4; }
