@@ -1,26 +1,37 @@
 (function() {
   'use strict';
 
-  function logisticFunction(C, prev) {
-    return C * (prev * (1 - prev));
+  function logisticFunction(c, prev) {
+    return c * prev * (1 - prev);
   }
 
   function point(ctx, x, y) {
-    ctx.beginPath();
-    ctx.arc(x, y, 1, 0, 1 * Math.PI, true);
-    ctx.fill();
+    ctx.fillRect(x,y,1,1);
+  }
+
+  function linearProjection(srcScaleMin, srcScaleMax, destScaleMin, destScaleMax) {
+    var factor = (destScaleMax - destScaleMin) / (srcScaleMax - srcScaleMin);
+    return function(value) {
+      return (value - srcScaleMin) * factor + destScaleMin;
+    }
   }
 
   function drawLogisticFunction(opts, canvas) {
-    console.log(canvas);
     var ctx = canvas.getContext("2d");
-    var x = 0;
-    for(var c = opts.minC; c <= opts.maxC; c += 2.0/opts.steps) {
-      x = opts.initial;
-      for (var i = 0; i < opts.iters; i++) {
-        x = c * x * (1 - x);
+    ctx.fillStyle = "#efefef";
+    ctx.fillRect(0, 0, opts.width, opts.height);
+    ctx.fillStyle = "#333";
+
+    var iters = opts.height + opts.skip;
+    var widthToC = linearProjection(0, opts.width, opts.minC, opts.maxC);
+
+    for(var x = 0; x < opts.width; x++) {
+      var c = widthToC(x)
+      var val = opts.initial;
+      for (var i = 0; i < iters; i++) {
+        val = logisticFunction(c, val)
         if (i > opts.skip) {
-          point(ctx, ((c - opts.minC) * 300), 400 - (x * 400));
+          point(ctx, x, opts.height - (val * opts.height));
         }
       }
     }
@@ -28,7 +39,7 @@
 
   $(function() {
     $("#logistic").each(function() {
-      var options = { initial: 0.75, minC: 2, maxC: 4, steps: 600, iters: 300, skip: 50}
+      var options = { width: 600, height: 400, initial: 0.1, minC: 3.5, maxC: 4.05, skip: 50}
       drawLogisticFunction(options, this);
     });
   });
