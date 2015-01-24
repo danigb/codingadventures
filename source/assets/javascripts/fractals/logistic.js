@@ -16,7 +16,7 @@
     }
   }
 
-  function drawLogisticFunction(opts, canvas) {
+  function drawLogisticFunction(canvas, opts) {
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "#efefef";
     ctx.fillRect(0, 0, opts.width, opts.height);
@@ -37,10 +37,11 @@
     }
   }
 
-  $(function() {
-    $("#logistic").each(function() {
+  window.onload = function() {
+    var logistic = document.getElementById("logistic");
+    if (logistic) {
       var options = { width: 600, height: 400, initial: 0.1, minC: 3.5, maxC: 4.05, skip: 50}
-      drawLogisticFunction(options, this);
-    });
-  });
+      drawLogisticFunction(logistic, options);
+    }
+  }
 })();
