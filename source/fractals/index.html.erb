@@ -1,0 +1,32 @@
+---
+layout: false
+---
+<!doctype html>
+<html>
+  <head>
+    <title>Blipbox: micro rhythm machine using blip.js</title>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag 'blipbox' %>
+    <%= javascript_include_tag 'blipbox' %>
+  </head>
+  <body>
+    <article>
+      <h1>Blipbox</h1>
+      <div id="blipbox">
+        <div class="transport">
+          <button class="play disabled">▶</button>
+          <button class="stop disabled">◼</button>
+          <input class="tempo" type="text" value="120" />
+        </div>
+      </div>
+      <div class="pattern">
+        <div class="sequence" data-name="clave" data-sample="/assets/sounds/maeclave.wav"></div>
+        <div class="sequence" data-name="hhat" data-sample="/assets/sounds/maehat1.wav"></div>
+        <div class="sequence" data-name="snare" data-sample="/assets/sounds/maesnare.wav"></div>
+        <div class="sequence" data-name="kick" data-sample="/assets/sounds/maekick.wav"></div>
+      </div>
+    </div>
+  </article>
+  <%= render_partial '/layouts/ga' %>
+  </body>
+</html>
