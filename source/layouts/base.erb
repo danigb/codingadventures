@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <meta name="description" content="Coding Adventures">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="updated" content="<%= Time.now %>">
+    <%= favicon_tag 'images/favicon.png' %>
+
+    <title><%= "#{current_page.title} | " unless current_article.nil? %> Coding Adventures</title>
+    <!-- link href='http://fonts.googleapis.com/css?family=Lato|Lora|Source+Code+Pro:400' rel='stylesheet' type='text/css' -->
+    <!-- link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' -->
+
+    <%= stylesheet_link_tag 'blog.css' %>
+    <%= javascript_include_tag current_page.data.javascripts.split(' ') if current_page.data.javascripts %>
+</head>
+  <body>
+    <nav id="navbar">
+      <header>
+          <h1 id="root"><a href="/">codingadventur.es</a></h1>
+          <h2 id="description">Coding adventures</h2>
+      </header>
+    </nav>
+    <section class="content">
+      <article>
+        <%= yield %>
+      </article>
+    </section>
+    <%= render_partial '/layouts/ga' %>
+  </body>
+</html>

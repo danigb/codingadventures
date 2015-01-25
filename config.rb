@@ -1,6 +1,12 @@
 
 # Time.zone = "UTC"
 
+helpers do
+  def page_title
+    current_page.data.title
+  end
+end
+
 activate :syntax,
   line_numbers: false
 

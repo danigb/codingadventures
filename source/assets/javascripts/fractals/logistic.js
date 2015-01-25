@@ -18,9 +18,7 @@
 
   function drawLogisticFunction(canvas, opts) {
     var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#efefef";
-    ctx.fillRect(0, 0, opts.width, opts.height);
-    ctx.fillStyle = "#333";
+    ctx.fillStyle = "#007";
 
     var iters = opts.height + opts.skip;
     var widthToC = linearProjection(0, opts.width, opts.minC, opts.maxC);
@@ -38,10 +36,11 @@
   }
 
   window.onload = function() {
-    var logistic = document.getElementById("logistic");
-    if (logistic) {
+    var canvas = document.getElementById("logistic");
+    if (canvas) {
+      canvas.style = "filter: blur(0.2px);";
       var options = { width: 600, height: 400, initial: 0.1, minC: 3.5, maxC: 4.05, skip: 50}
-      drawLogisticFunction(logistic, options);
+      drawLogisticFunction(canvas, options);
     }
   }
 })();
