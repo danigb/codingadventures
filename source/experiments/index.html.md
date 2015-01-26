@@ -16,6 +16,8 @@ layout: base
 - [Función logística reactiveX](/experiments/logistic-rxjs)
 - [RxJS-DOM RequestAnimationFrame Example](/experiments/rxjs-dom-requestanimationframe)
 
+## DOM Change Benchmarks
+- [jQuery/Zepto version](/experiments/dom-change-test-jquery)
 
 
 ---
