@@ -1,4 +1,5 @@
 ---
+title: Javascript Experiments
 layout: base
 ---
 
@@ -17,7 +18,7 @@ layout: base
 - [RxJS-DOM RequestAnimationFrame Example](/experiments/rxjs-dom-requestanimationframe)
 
 ## DOM Change Benchmarks
-- [jQuery/Zepto version](/experiments/dom-change-test-jquery)
+- [Pure Javascript](/experiments/dom-change-test)
 - [React version](/experiments/dom-change-test-react)
 - [Virtual-DOM version](/experiments/dom-change-test-virtual-dom)
 

@@ -18,9 +18,6 @@
 
   function drawLorentz(canvas, data, opts) {
     var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#333";
-    ctx.fillRect(0, 0, opts.width, opts.height);
-    ctx.fillStyle = "hsl(100, 50%, 50%)";
     var running = true;
     var hue = 100;
 
