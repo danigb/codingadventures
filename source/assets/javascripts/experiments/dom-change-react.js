@@ -3,17 +3,13 @@
   const STEPS = 16;
   var $time, $seq;
 
-  function isActive(tick, row, step) {
-    return (tick % 2) === (step % 2);
-  }
-
   function newModel(tick) {
     var rows = [];
     for (r = 0; r < ROWS; r++) {
       var row = [];
       rows.push(row);
       for (s = 0; s < STEPS; s++) {
-        row.push(isActive(tick, r, s));
+        row.push((tick % 2) === (s % 2));
       }
     }
     return rows;

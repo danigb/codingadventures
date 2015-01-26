@@ -2,8 +2,8 @@
   'use strict';
 
   var $time, $seq;
-  const ROWS = 100;
-  const STEPS = 16;
+  var ROWS = 100;
+  var STEPS = 16;
   var $rows;
 
   function prepare(parent, ROWS, STEPS) {
