@@ -18,6 +18,7 @@ layout: base
 
 ## DOM Change Benchmarks
 - [jQuery/Zepto version](/experiments/dom-change-test-jquery)
+- [React version](/experiments/dom-change-test-react)
 
 
 ---

@@ -25,12 +25,12 @@
     return rows;
   }
 
-  var lastClick = +new Date();
+  var lastTick = +new Date();
   var tick = 0;
   function animate() {
     var now = +new Date();
-    $time.innerHTML = "FPS: " + parseInt(1000 / (now - lastClick));
-    lastClick = now;
+    $time.innerHTML = "FPS: " + parseInt(1000 / (now - lastTick));
+    lastTick = now;
 
     tick++;
     for (var r = 0; r < ROWS; r++) {
