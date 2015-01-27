@@ -5,6 +5,9 @@ layout: base
 
 # Experiments
 
+## Drum machines
+- [Drumbox with pure javascript](/experiments/drumbox-simple)
+
 ## Fractals
 
 - [Función logística](/experiments/logistic)
@@ -21,6 +24,7 @@ layout: base
 - [Pure Javascript](/experiments/dom-change-test)
 - [React version](/experiments/dom-change-test-react)
 - [Virtual-DOM version](/experiments/dom-change-test-virtual-dom)
+
 
 
 ---
