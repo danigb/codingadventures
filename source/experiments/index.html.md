@@ -6,7 +6,9 @@ layout: base
 # Experiments
 
 ## Drum machines
+- [Drumbox blip.js version](/experiments/drumbox-blip)
 - [Drumbox with pure javascript](/experiments/drumbox-simple)
+- [Realbook](/experiments/realbook)
 
 ## Fractals
 

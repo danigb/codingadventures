@@ -19,13 +19,13 @@
   }
 
   function render(rows) {
-    var createStep = function(step) {
+    var renderStep = function(step) {
       return h(step ? 'div.active' : 'div');
     }
-    var createRow = function(row) {
-      return h('div.row', row.map(createStep));
+    var renderRow = function(row) {
+      return h('div.row', row.map(renderStep));
     }
-    return h('div', rows.map(createRow));
+    return h('div', rows.map(renderRow));
   }
 
   var rootNode;
