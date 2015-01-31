@@ -5,10 +5,11 @@ layout: base
 
 # Experiments
 
-## Drum machines
+## Music
 - [Drumbox blip.js version](/experiments/drumbox-blip)
 - [Drumbox with pure javascript](/experiments/drumbox-simple)
-- [Realbook](/experiments/realbook)
+- [Realbook (Virtual DOM)](/experiments/realbook-virtual-dom)
+- [Realbook (React)](/experiments/realbook-react)
 
 ## Fractals
 

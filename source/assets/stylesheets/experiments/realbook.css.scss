@@ -1,6 +1,9 @@
 
 .song {
+  width: 100%; overflow: hidden;
+
   .sheet {
+    float: left;
     width: 50%; overflow: hidden;
 
 
@@ -10,6 +13,15 @@
       padding: 0.5em 0;
       margin-bottom: 1px;
       background-color: #efefef;
+
+      &.selected {
+        background-color: orange;
+      }
     }
+  }
+
+  .measure-info {
+    float: left;
+    width: 50%;
   }
 }

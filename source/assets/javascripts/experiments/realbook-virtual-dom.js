@@ -10,6 +10,7 @@
   }
 
   function song(title, structure) {
+    var harmonyCtx = {note: 'C', mode: 'major'}
     var tempo = 120;
     var signature = { beats: 4, subdivision: 4 };
     var song = {};
@@ -24,8 +25,8 @@
       if (arguments.length == 1) return parts[partName];
 
       var part = { };
-      part.measures = value.split('|').map(function(content) {
-        return { m: content};
+      part.measures = value.split('|').map(function(chords) {
+        return { chords: chords, selected: false};
       });
       part.length = part.measures.length;
 
@@ -63,9 +64,15 @@
 
   var h = virtualDom.h;
   function render(parent, song) {
+
     function renderMeasure(measure) {
-      return h("div.measure", [h("a", measure.content)]);
+      return h("div.measure", {
+        onclick: function() {
+          console.log("clicked: ", measure);
+        }
+      }, [h("a", measure.chords)]);
     }
+
     function renderPart(partName) {
       var part = song.part(partName);
       return h("div.part", part.measures.map(renderMeasure));
