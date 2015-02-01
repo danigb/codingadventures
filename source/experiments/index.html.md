@@ -15,12 +15,14 @@ layout: base
 
 - [Función logística](/experiments/logistic)
 - [Función logística animated](/experiments/logistic-animation)
+- [Función logística reactiveX](/experiments/logistic-rxjs)
 - [Función logística generators](/experiments/logistic-generators)
+- [Función logística zoom](/experiments/logistic-zoom)
+- [Función logística reactive custom](/experiments/logistic-reactive-custom)
 - [Lorentz](/experiments/lorentz)
 
 ## ReactiveX
 
-- [Función logística reactiveX](/experiments/logistic-rxjs)
 - [RxJS-DOM RequestAnimationFrame Example](/experiments/rxjs-dom-requestanimationframe)
 
 ## DOM Change Benchmarks
