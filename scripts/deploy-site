@@ -1,4 +1,4 @@
 #!/bin/sh
 pushd ./site > /dev/null
-bundle exec middleman server
+bundle exec middleman deploy
 popd > /dev/null
