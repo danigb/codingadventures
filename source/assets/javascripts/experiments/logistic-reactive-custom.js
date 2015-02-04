@@ -3,7 +3,7 @@
 
   function stream(source, scheduler) {
     scheduler = scheduler || stream.scheduler;
-    var s = {};
+    var s = { source : source };
 
     s.subscribe = function(callback) {
       scheduler(callback, source);
@@ -34,6 +34,16 @@
         }
       }, scheduler);
     }
+    s.flatMap = function() {
+      return stream(function*() {
+        console.log("flatmap");
+        var f = 0;
+        for (var stream of source()) {
+          console.log('FFFF', ++f);
+          yield *stream.source();
+        }
+      }, scheduler);
+    }
     return s;
   }
   stream.range = function(min, max, scheduler) {
@@ -59,18 +69,8 @@
     requestAnimationFrame(loop);
   }
 
-  function logisticGen(C, init) {
-    return function*() {
-      var v = init;
-      while(true) {
-        v = C * v * (1 - v);
-        yield v;
-      }
-    }
-  }
-
   const WIDTH = 600;
-  const HEIGHT = 400;
+  const HEIGHT = 500;
   const INITIAL = 0.1;
   const MIN_C = 3.5;
   const MAX_C = 4.0;
@@ -80,60 +80,43 @@
 
   function main() {
     var canvas = document.getElementById('logistic');
-    ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d');
 
     var initialValue = 0.1;
 
-    function draw(x, value) {
-      ctx.fillRect(x, HEIGHT * (1 - value), 1, 1);
+    function logisticGen(C, init) {
+      return function*() {
+        var v = init;
+        while(true) {
+          v = C * v * (1 - v);
+          yield v;
+        }
+      }
+    }
+
+    function draw(pixel) {
+      ctx.fillStyle = pixel.color;
+      ctx.fillRect(pixel.x, pixel.y, 1, 1);
     }
 
     var offsets = stream.range(0, WIDTH, stream.scheduler.animationFrame);
-    var logistics = offsets.map(function(xOffset) {
+    var columns = offsets.map(function(xOffset) {
         var C = xOffset * FACTOR + MIN_C;
-        var logistic = stream(logisticGen(C, 0.1)).skip(50).take(100);
-        logistic.xOffset = xOffset;
-        return logistic;
+        var logistic = stream(logisticGen(C, 0.1))
+        var points = logistic.map(function(v) {
+          var x = xOffset;
+          var y = HEIGHT * (1 - v);
+          var color = "hsl(" + (360 * v) + ", 80%, 50%)"
+          return { x, y, color }
+        });
+        var column = points.skip(50).take(30);
+        return column;
       });
-    logistics.subscribe(function(logistic) {
-      logistic.subscribe(function(value) {
-        draw(logistic.xOffset, value);
-      });
+    columns.subscribe(function(column) {
+      column.subscribe(draw);
     });
   }
-
-
-  function test() {
-    stream(function*() {
-      while(true) { yield 'a' }
-    })
-      .take(5)
-      .subscribe(function(x) {
-        console.log(x);
-      });
-  };
 
   window.onload = main;
-
-  function createStream() {
-    return Rx.Observable.range(0, WIDTH, Rx.Scheduler.requestAnimationFrame)
-    .map(function(xOffset) {
-      var C = xOffset * FACTOR + MIN_C;
-      return {
-        xOffset: xOffset,
-        stream: Rx.Observable.from(createLogistic(C, INITIAL))
-                    .skip(SKIP)
-                    .take(HEIGHT)
-      };
-    });
-  }
-
-  var ctx;
-  function draw(logistic) {
-    logistic.stream.subscribe(function(value) {
-      ctx.fillRect(logistic.xOffset, HEIGHT * (1 - value), 1, 1);
-    });
-  }
-
 
 })();
