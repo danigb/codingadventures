@@ -1,4 +1,4 @@
 #!/bin/sh
-pushd ./site > /dev/null
+pushd ./Site > /dev/null
 bundle exec middleman build
 popd > /dev/null
