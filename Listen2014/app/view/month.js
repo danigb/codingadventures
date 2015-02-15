@@ -51,9 +51,10 @@ module.exports = React.createClass({
       background: albumCount == 0 ? '#DDD' :
         "hsl(150, 91%, " + (90 - albumCount * 2) + "%)"
     }
+    var handler = this.props.onClick;
 
     return (
-      <div key={day.key} className="day" style={styles}>
+      <div key={day.key} className="day" onClick={function() { handler(day, dayAlbums); }} style={styles}>
         <div className="info">{DAYS[date.getDay()]} {day.num}</div>
         <div className="count">{albumCount}</div>
       </div>
