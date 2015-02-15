@@ -13,6 +13,12 @@ html {
   background-color: #efefef;
 }
 
+.item h3 {
+  margin: 2px;
+}
+.item h3 .position { font-size: 2em; }
+
+
 .month {
   width: 100%; overflow: hidden;
 }

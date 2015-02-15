@@ -1,15 +1,14 @@
 'use strict';
 
 var React = require('react');
-var data = require('../data.js');
 
 module.exports = React.createClass({
   render: function() {
-    var album = data.albumStore.get(this.props.title);
+    var album = this.props.album;
 
     return (
       <div className="album">
-        <h3>({this.props.position}) {album.title}</h3>
+        <h3><span className="position">{this.props.position}. </span>{album.title}</h3>
         <div>{album.artist}</div>
         <div>{album.year}</div>
         <div>{album.play_ratio}</div>

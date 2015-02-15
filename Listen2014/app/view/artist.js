@@ -1,15 +1,15 @@
 'use strict';
 
 var React = require('react');
-var data = require('../data.js');
 
 module.exports = React.createClass({
   render: function() {
-    var artist = data.artistStore.get(this.props.artistName);
+    var artist = this.props.artist;
+    var position = this.props.position;
 
     return (
       <div className="Artist">
-        <span>{artist.name}</span> |
+        <h3><span className="position">{position}. </span>{artist.name}</h3>
       </div>
     );
   }
