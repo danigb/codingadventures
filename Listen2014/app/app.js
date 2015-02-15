@@ -9,7 +9,7 @@ var data = require('./data.js');
 
 var App = React.createClass({
   renderMonth: function(month, index) {
-    return <Month key={month} month={month} />
+    return <Month key={month.key} month={month} />
   },
   renderAlbum: function(album, index) {
     return <Album key={album.key} position={index + 1} album={album} />
@@ -18,7 +18,7 @@ var App = React.createClass({
     return <Artist key={artist.key} position={index + 1} artist={artist} />
   },
   render: function() {
-    var months = data.monthStore.keys().map(this.renderMonth);
+    var months = data.sortedMonths.map(this.renderMonth);
     var albums = data.sortedAlbums.slice(0, 40).map(this.renderAlbum);
     var artists = data.sortedArtists.slice(0, 10).map(this.renderArtist);
 

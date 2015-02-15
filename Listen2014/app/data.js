@@ -28,8 +28,14 @@ function buildData(tracks) {
 
   data.monthStore = store(data.albumStore.all(), function(album) {
     var split = album.added.split('T')[0].split('-')
-    return split[0] + '/' + split[1];
-  });
+    return split[0] + '-' + split[1];
+    }).each(function(month) {
+      month.dayStore = store(month.values, function(album) {
+        return album.added.split('T')[0];
+      });
+    });
+  data.sortedMonths = data.monthStore.all();
+
 
   data.artistStore = store(data.albumStore.all(), function(album) { return album.artist; });
   data.artistStore.each(function(artist) {
@@ -38,6 +44,10 @@ function buildData(tracks) {
     artist.play_ratio = artist.albums.reduce(function(sum, album) {
       return sum + album.play_ratio;
     }, 0) / artist.albums.length;
+  });
+
+  data.dayStore = store(data.albumStore.all(), function(album) {
+    return album.added.split('T')[0];
   });
 
 

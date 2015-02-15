@@ -25,12 +25,12 @@ module.exports = React.createClass({
     return (
       <div className="grid">
         <h2>{this.props.title}</h2>
+        <div className="items">
+          {items}
+        </div>
         <div className="controls">
           <a href="#" onClick={this.showMore}>+ más</a>
           <a href="#" onClick={this.showLess}>- menos</a>
-        </div>
-        <div className="items">
-          {items}
         </div>
       </div>
     )

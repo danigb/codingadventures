@@ -22,13 +22,15 @@ html {
 .month {
   width: 100%; overflow: hidden;
 }
-.month div { float: left; }
-.month .label { width: 8em; }
+
+.month > div { float: left; }
+.month .label { width: 10%; }
 .month .day {
+  width: 2%; height: 0;
+  padding-bottom: 2%;
+  margin: 0px 0.2% 0.2% 0;
   font-size: 8px; text-align: center;
-  color: white;
-  width: 10px; height: 10px;
-  margin: 0 2px 0 2px;
+  color: black;
   overflow: hidden;
-  background-color: #5A5;
+  background-color: #efefef;
 }
