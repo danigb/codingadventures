@@ -40,19 +40,19 @@ class Export
   end
 
   private
-  def album(name)
-    @albums[name] ||= { name: name, tracks: [] }
-    @albums[name]
+  def album(title)
+    @albums[title] ||= { title: title, tracks: [] }
+    @albums[title]
   end
 
-  def add_track(name)
+  def add_track(title)
     process_current_track
-    @current_track = {name: name}
+    @current_track = {title: title}
     @tracks += 1
   end
 
-  def add_track_data(name, value)
-    @current_track[name] = value
+  def add_track_data(key, value)
+    @current_track[key] = value
   end
 
   def process_current_track
@@ -89,4 +89,4 @@ class Export
 end
 
 albums = Export.new.parse('2014.xml')
-File.open('2014.json', 'w') {|f| f.write(albums.to_json) }
+File.open('albums2014.json', 'w') {|f| f.write(albums.to_json) }

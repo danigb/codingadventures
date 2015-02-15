@@ -1,0 +1,28 @@
+html {
+  font: 1em "HelveticaNeue", "Helvetica Neue", Helvetica, Arial sans-serif;
+  color: #333;
+}
+
+.grid .items { width: 100%; overflow: hidden; }
+.grid .items .item {
+  float: left; overflow: hidden;
+  width: 11%;
+  height: 0;
+  margin: 0px 1% 1% 0;
+  padding-bottom: 11%;
+  background-color: #efefef;
+}
+
+.month {
+  width: 100%; overflow: hidden;
+}
+.month div { float: left; }
+.month .label { width: 8em; }
+.month .day {
+  font-size: 8px; text-align: center;
+  color: white;
+  width: 10px; height: 10px;
+  margin: 0 2px 0 2px;
+  overflow: hidden;
+  background-color: #5A5;
+}
