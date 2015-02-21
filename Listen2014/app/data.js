@@ -46,10 +46,8 @@ function buildData(tracks) {
     }, 0) / artist.albums.length;
   });
 
-  data.dayStore = store(data.albumStore.all(), function(album) {
-    return album.added.split('T')[0];
-  });
-
+  data.yearStore = store(data.albumStore.all(), function(album) { return album.year; });
+  data.sortedYears = data.yearStore.all().sort(function(a,b) { return a.key - b.key; });
 
   var sortByPlayRatio = function(a, b) { return b.play_ratio - a.play_ratio; }
   data.sortedAlbums = data.albumStore.all().sort(sortByPlayRatio);

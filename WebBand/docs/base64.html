@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>base64.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="base64.html">
+                  base64.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>base64.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b64ToUint6</span> <span class="hljs-params">(nChr)</span> </span>{
+  <span class="hljs-keyword">return</span> nChr &gt; <span class="hljs-number">64</span> &amp;&amp; nChr &lt; <span class="hljs-number">91</span> ?
+      nChr - <span class="hljs-number">65</span>
+    : nChr &gt; <span class="hljs-number">96</span> &amp;&amp; nChr &lt; <span class="hljs-number">123</span> ?
+      nChr - <span class="hljs-number">71</span>
+    : nChr &gt; <span class="hljs-number">47</span> &amp;&amp; nChr &lt; <span class="hljs-number">58</span> ?
+      nChr + <span class="hljs-number">4</span>
+    : nChr === <span class="hljs-number">43</span> ?
+      <span class="hljs-number">62</span>
+    : nChr === <span class="hljs-number">47</span> ?
+      <span class="hljs-number">63</span>
+    :
+      <span class="hljs-number">0</span>;
+
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="decode-base64-to-uint8array">Decode Base64 to Uint8Array</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sBase64, nBlocksSize)</span> </span>{
+  <span class="hljs-keyword">var</span> sB64Enc = sBase64.replace(<span class="hljs-regexp">/[^A-Za-z0-9\+\/]/g</span>, <span class="hljs-string">""</span>);
+  <span class="hljs-keyword">var</span> nInLen = sB64Enc.length;
+  <span class="hljs-keyword">var</span> nOutLen = nBlocksSize ?
+    <span class="hljs-built_in">Math</span>.ceil((nInLen * <span class="hljs-number">3</span> + <span class="hljs-number">1</span> &gt;&gt; <span class="hljs-number">2</span>) / nBlocksSize) * nBlocksSize :
+    nInLen * <span class="hljs-number">3</span> + <span class="hljs-number">1</span> &gt;&gt; <span class="hljs-number">2</span>;
+  <span class="hljs-keyword">var</span> taBytes = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>(nOutLen);
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> nMod3, nMod4, nUint24 = <span class="hljs-number">0</span>, nOutIdx = <span class="hljs-number">0</span>, nInIdx = <span class="hljs-number">0</span>; nInIdx &lt; nInLen; nInIdx++) {
+    nMod4 = nInIdx &amp; <span class="hljs-number">3</span>;
+    nUint24 |= b64ToUint6(sB64Enc.charCodeAt(nInIdx)) &lt;&lt; <span class="hljs-number">18</span> - <span class="hljs-number">6</span> * nMod4;
+    <span class="hljs-keyword">if</span> (nMod4 === <span class="hljs-number">3</span> || nInLen - nInIdx === <span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">for</span> (nMod3 = <span class="hljs-number">0</span>; nMod3 &lt; <span class="hljs-number">3</span> &amp;&amp; nOutIdx &lt; nOutLen; nMod3++, nOutIdx++) {
+        taBytes[nOutIdx] = nUint24 &gt;&gt;&gt; (<span class="hljs-number">16</span> &gt;&gt;&gt; nMod3 &amp; <span class="hljs-number">24</span>) &amp; <span class="hljs-number">255</span>;
+      }
+      nUint24 = <span class="hljs-number">0</span>;
+    }
+  }
+  <span class="hljs-keyword">return</span> taBytes;
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
