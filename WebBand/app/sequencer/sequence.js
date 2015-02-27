@@ -23,7 +23,7 @@ function sequence() {
       position: position(start), velocity: velocity});
     seq.events.push({type: 'NoteOff', noteName: name,
       position: position(start + duration) })
-      
+
   }
 
   return seq;

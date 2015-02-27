@@ -6,16 +6,18 @@ var parse = require('./parse.js');
 // -------
 // **pattern** is a array of tokens with durations
 
-function reduceDurations(ast, duration, flat) {
+function reduceDurations(ast, position, duration, flat) {
   return ast.reduce(function(flat, toFlatten) {
-    return flat.concat(Array.isArray(toFlatten) ?
-      reduceDurations(toFlatten, (duration / toFlatten.length), []) :
-      {token: toFlatten, duration: duration});
+    var event = Array.isArray(toFlatten) ?
+      reduceDurations(toFlatten, position, (duration / toFlatten.length), []) :
+      {token: toFlatten, position: position, duration: duration};
+    position += duration;
+    return flat.concat(event);
   }, flat);
 }
 
 var pattern = function(text, duration, flat) {
-  return reduceDurations(parse(text), duration || 1.0, flat || []);
+  return reduceDurations(parse(text), 0, duration || 1.0, flat || []);
 }
 
 module.exports = pattern;
