@@ -1,0 +1,19 @@
+{
+  "name": "Auxyjs",
+  "version": "0.1.0",
+  "description": "Auxy for web",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/jasmine-node/bin/jasmine-node test/*.spec.js",
+    "start": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine-node": "~1.14.5",
+    "webpack-dev-server": "~1.7.0",
+    "webpack": "~1.6.0",
+    "babel-core": "~4.5.5",
+    "babel-loader": "~4.0.0"
+  }
+}
